@@ -1,0 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prom.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
+/*   Updated: 2019/06/15 20:27:57 by jsteuber         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "mlx.h"
+#include <fcntl.h>
+#include <stdlib.h>
+#include "wolf.h"
+
+void	err_ex(int pr)
+{
+	if (pr == 0)
+		ft_putstr("Error: memory allocation failure\n");
+	if (pr == 1)
+		ft_putstr("Error: invalid map\n");
+	if (pr == 2)
+		ft_putstr("Error: can't read from file\n");
+	exit(1);
+}
+
+int		main(int argc, char **argv)
+{
+	t_win		*cr;
+
+	if (!(cr = (t_win *)malloc(sizeof(t_win))))
+		err_ex(0);
+	init(argv[1], cr);
+	hooks(cr);
+	(void)argc;
+	return (0);
+}
