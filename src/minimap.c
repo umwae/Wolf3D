@@ -6,24 +6,26 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/06/20 21:58:29 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/02 19:19:06 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include "mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-// static void	draw_point(t_win *cr)
-// {
-// 	cr->vs->x_offset = WIN_WIDTH - cr->vs->gridsize * (cr->x_len - 1);
-// 	cr->vs->y_offset = 0;
-// 	img_pxl(t_win *cr, int x, int y, int color)
-// 	{
-//
-// 	}
-// }
+static void	draw_objects(t_win *cr)
+{
+	int	i = 0;
+
+	cr->vs->vcolor = 0xffffff;
+	while (i < cr->spritesnum)
+	{
+		draw_rectangle(cr, cr->sprOrder[i].x * cr->vs->gridsize + cr->vs->x_offset - 3, \
+			cr->sprOrder[i].y * cr->vs->gridsize + cr->vs->y_offset - 3, 6, 6);
+		i++;
+	}
+}
 
 static void	draw_player(t_win *cr)
 {
@@ -104,6 +106,7 @@ void		minimap(t_win *cr)
 		draw_rectangle(cr, cr->vs->x_offset, cr->vs->y_offset, cr->vs->gridsize * (cr->x_len - 1), cr->vs->gridsize * (cr->y_len - 1));
 		draw_grid(cr);
 		draw_walls(cr);
+		draw_objects(cr);
 		draw_player(cr);
 }
 

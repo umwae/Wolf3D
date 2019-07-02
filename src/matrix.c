@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:53:58 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/06/04 21:14:44 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/02 19:10:33 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 
 void			transform(t_win *win1, double *x0, double *y0, char dir)
 {
-	double	x = *x0;
-	double	y = *y0;
+	double	x;
+	double	y;
 
-	// printf("DO %d\n", win1->dir.y2);
+	x = *x0;
+	y = *y0;
 	if (dir == 'R')
 	{
 		*x0 = x * cos(win1->rotation) + y * sin(win1->rotation);
@@ -30,5 +31,4 @@ void			transform(t_win *win1, double *x0, double *y0, char dir)
 		*x0 = x * cos(win1->rotation) + y * -sin(win1->rotation);
 		*y0 = x * sin(win1->rotation) + y * cos(win1->rotation);
 	}
-	// printf("POSLE %d\n", win1->dir.y2);
 }

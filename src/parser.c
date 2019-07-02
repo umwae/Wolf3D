@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:10 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/06/21 19:18:28 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/06/21 20:38:32 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,6 @@ static void		map_line(char *line, int j, t_win *cr)
 		i++;
 	}
 	ft_arrfree(&arr, cr->x_len);
-}
-
-static void		vector_init(t_win *cr)
-{
-	cr->player.x = 5.1; //Добавить функцию поиска свободной клетки
-	cr->player.y = 5.5; //для помещения туда игрока
-	cr->dir.x = 0;
-	cr->dir.y = 10;
-	cr->plane.x = 5;
-	cr->plane.y = 0;
-	cr->dir.len = cr->dir.x > cr->dir.y ? cr->dir.x : cr->dir.y;
-	cr->plane.len = cr->plane.x > cr->plane.y ? cr->plane.x : cr->plane.y;
 }
 
 void			get_map(int fd0, int fd, t_win *cr)

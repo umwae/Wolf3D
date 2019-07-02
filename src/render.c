@@ -6,14 +6,13 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:12:24 by adoyle            #+#    #+#             */
-/*   Updated: 2019/06/21 18:19:04 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/02 21:21:42 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "wolf.h"
 #include <stdio.h>
-#include "mlx.h"
 
 
 static int		colors(t_win *cr, int i, double column)
@@ -47,8 +46,36 @@ static int		colors(t_win *cr, int i, double column)
 	// if (cr->rcurr == 1)
 	// 	cr->objcl = 0x0000ff;
 	c = cr->addrtext[tx + (t * TEXSIZE)];
-		// return (c);
-		return (cr->objcl);
+		return (c);
+		// return (cr->objcl);
+}
+
+int	floormap(double y, double distWall, t_win *cr)
+{
+	double distPlayer;
+	double currentDist;
+	int c;
+
+    currentDist = (double)WIN_HIGHT / (2.0 * (double)y - (double)WIN_HIGHT);
+	double weight = currentDist / distWall;
+
+    double currentFloorX = weight * cr->hitx + (1.0 - weight) * cr->player.x;
+    double currentFloorY = weight * cr->hity + (1.0 - weight) * cr->player.y;
+
+    int floorTexX, floorTexY;
+    floorTexX = (int)(currentFloorX * TEXSIZE) % TEXSIZE;
+    floorTexY = (int)(currentFloorY * TEXSIZE) % TEXSIZE;
+
+   c = cr->floortext[TEXSIZE * floorTexY + floorTexX];
+   return (c);
+}
+
+void	draw_gui(t_win *cr)
+{
+	char	*string;
+
+	string = ft_strjoin("COINS ", ft_itoa(cr->coins));
+	mlx_string_put(cr->mlx, cr->win, WIN_WIDTH * 0.05, WIN_HIGHT * 0.95, 0xffffff, string);
 }
 
 void	draw(t_win *cr, int ray)
@@ -58,7 +85,7 @@ void	draw(t_win *cr, int ray)
 	double	beg;
 
 	i = 0;
-	column = WIN_HIGHT / cr->dist / 5;//Заменить на норм. расчет высоты столбцов
+	column = WIN_HIGHT / cr->dist;//Заменить на норм. расчет высоты столбцов
 	beg = (WIN_HIGHT - column) / 2;
 	// printf("%d    ", ray);
 	// fflush(stdout);
@@ -66,7 +93,7 @@ void	draw(t_win *cr, int ray)
 	{
 		if ((i > beg) && (i < WIN_HIGHT - beg) && i > 0)
 		{
-			cr->wall = checker(cr, cr->hitx, cr->hity, cr->tiles);
+			// cr->wall = checker(cr, cr->hitx, cr->hity, cr->tiles);
 			// cr->wall = 's';
 			if (cr->wall == 'e')
 				cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
@@ -77,6 +104,8 @@ void	draw(t_win *cr, int ray)
 			if (cr->wall == 'w')
 				cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
 		}
+		else if (i > beg + column)
+			cr->addr[ray + (i * WIN_WIDTH)] = floormap(i, cr->dist, cr);
 		i++;
 	}
 }
