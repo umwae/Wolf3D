@@ -44,9 +44,9 @@ static void	tex_init(t_win *cr)
 	int	x;
 	int	y;
 
-	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/brick.xpm", &x, &y);
+	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/wall1.xpm", &x, &y);
 	cr->textures[0] = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
-	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/wood.xpm", &x, &y);
+	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/floor1.xpm", &x, &y);
 	cr->textures[1] = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
 	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/coin.xpm", &x, &y);
 	cr->textures[2] = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
@@ -76,9 +76,9 @@ int		init(char *argv, t_win *cr)
 	y = TEXSIZE;
 	if (!(cr->textures = (int **)malloc(sizeof(int *) * TEXNUM)))
 		err_ex(0);
-	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/brick.xpm", &x, &y);
+	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/wall1.xpm", &x, &y);
 	cr->addrtext = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
-	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/wood.xpm", &x, &y);
+	cr->text = mlx_xpm_file_to_image(cr->mlx, "src/floor1.xpm", &x, &y);
 	cr->floortext = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
 	//
 	tex_init(cr);

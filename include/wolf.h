@@ -104,7 +104,7 @@ typedef struct		s_win
 # define SPEED 0.1
 # define MAX_DIST 35
 //
-# define TEXSIZE 720
+# define TEXSIZE 700
 # define TEXNUM 2//Число текстур
 # define SPRITESNUM 3//Начальное число спрайтов
 // # define MAXHP 100
