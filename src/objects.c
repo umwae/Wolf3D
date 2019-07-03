@@ -1,45 +1,28 @@
-#include "mlx.h"
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
 #include <stdlib.h>
 #include "wolf.h"
 
-void	renderspr(t_win *cr, int ray, int spriteH, int startspr, int endspr)
+void	renderspr(t_win *cr, int ray, double column, int startspr, int endspr)
 {
 	int i;
-	double	column;
 	int	beg;
-	//
 	int tx;
 	double	ty;
-	double	x;
 	int t;
 	int c;
-	char	*img;
 
 	i = 0;
-	column = spriteH;//Заменить на норм. расчет высоты столбцов
-	beg = (WIN_HIGHT - column) / 1.5;
-	// printf("%d    ", ray);
-	// fflush(stdout);
-	x = ray;
-	//
-	while (i < WIN_HIGHT)
+	beg = (WIN_HIGHT - column) / 2;
+	while (i < column)
 	{
-		if ((i > beg) && (i < WIN_HIGHT - beg) && i > 0)
-		{
-			tx = (double)(endspr - ray) / (endspr - startspr) * 592;
-			if (tx < 0)
-				tx = 0;//?????????????????????????
-			ty = (double)592 / spriteH;
-			t = i * ty;
-			if (t > 592)
-				t = 592;//??????????????????//
-			c = cr->textures[2][tx + (t * 592)];
-			if (((c >> 16) & 0xff) != 0)
-				cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
-		}
+		tx = (double)(endspr - ray) / (endspr - startspr) * 592;
+		ty = (double)592 / column;
+		t = i * ty;
+		c = cr->textures[2][tx + (t * 592)];
+		if (((c >> 16) & 0xff) != 0)
+			cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
 		i++;
 	}
 }
@@ -83,12 +66,12 @@ void	sprite(t_win *cr)
 		int spriteW = abs((int)(WIN_HIGHT / transY)) / uDiv;
 		int startspr = -spriteW /2 + sprscrX;
 		//
-		st = startspr;
+		st = WIN_WIDTH - startspr;
 		if (startspr < 0)
 			startspr = 0;
 		int	endspr = spriteW / 2 + sprscrX;
 		//
-		nd = endspr;
+		nd = WIN_WIDTH - endspr;
 		if (endspr >= WIN_WIDTH)
 			endspr = WIN_WIDTH - 1;
 		int stripe = startspr;
@@ -154,7 +137,7 @@ void		obj_init(t_win *cr)
 	int		y;
 
 	t_spr	sprarr[SPRITESNUM] =
-	{{5.5, 5.5, 2, 0.0, 'c', 1},
+	{{6.5, 5.5, 2, 0.0, 'c', 1},
 	{3.5, 7.5, 2, 0.0, 'c', 1},
 	{8.5, 2.5, 2, 0.0, 'c', 1}};
 	int	i = 0;

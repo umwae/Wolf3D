@@ -29,7 +29,7 @@ void		img_pxl(t_win *cr, int x, int y, int color)
 {
 	char	*p;
 
-	if (x > WIN_WIDTH || y > WIN_HIGHT || \
+	if (x >= WIN_WIDTH - 1 || y >= WIN_HIGHT - 1 || \
 		x < 0 || y < 0)
 	{
 		// printf("OOB! ");

@@ -16,8 +16,8 @@
 # include "../libft/includes/get_next_line.h"
 # include "../minilibx_macos/mlx.h"
 
-# define WIN_WIDTH 1300
-# define WIN_HIGHT 1300
+# define WIN_WIDTH 1000
+# define WIN_HIGHT 1000
 
 typedef struct		s_visual//Для миникарты1
 {
@@ -101,7 +101,7 @@ typedef struct		s_win
 }					t_win;
 
 # define ROTATION -0.1
-# define SPEED 0.02
+# define SPEED 0.1
 # define MAX_DIST 35
 //
 # define TEXSIZE 720
