@@ -14,6 +14,24 @@
 #include "wolf.h"
 #include <stdio.h>
 
+static int		blender(int sc1, int sc2, double passed)
+{
+	return ((1 - passed) * sc1 + passed * sc2);
+}
+
+static int				getgrad(int color1, int color2, double passed)
+{
+	int		red;
+	int		green;
+	int		blue;
+
+	if (color1 == color2)
+		return (color1);
+	red = blender((color1 >> 16) & 0xFF, (color2 >> 16) & 0xFF, passed);
+	green = blender((color1 >> 8) & 0xFF, (color2 >> 8) & 0xFF, passed);
+	blue = blender(color1 & 0xFF, color2 & 0xFF, passed);
+	return ((red << 16) | (green << 8) | blue);
+}
 
 static int		colors(t_core *cr, int i, double column)
 {
@@ -42,7 +60,9 @@ static int		colors(t_core *cr, int i, double column)
 	tx = (x - (int)x) * TEXSIZE;
 	ty = (double)TEXSIZE / column;
 	t = i * ty;
-	c = cr->textures[cr->wtexnum][tx + (t * TEXSIZE)];
+	// if (1 / cr->dist > 1)
+	// 	return (0xffffff);
+	c = getgrad(getgrad(cr->textures[cr->wtexnum][tx + (t * TEXSIZE)], 0x7B241C, 1/(cr->dist + 1)), 0x000000, 1 - 1 / (cr->dist + 1));
 		return (c);
 		// return (cr->objcl);
 }
@@ -63,8 +83,10 @@ int	floormap(double y, double distWall, t_core *cr)
     floorTexX = (int)(currentFloorX * TEXSIZE) % TEXSIZE;
     floorTexY = (int)(currentFloorY * TEXSIZE) % TEXSIZE;
 
-   c = cr->textures[FLOORTEX][TEXSIZE * floorTexY + floorTexX];
-   return (c);
+	// if (1 / currentDist > 1)
+	// return (0xffffff);
+	c = getgrad(getgrad(cr->textures[FLOORTEX][TEXSIZE * floorTexY + floorTexX], 0x7B241C, 1/(currentDist + 1)), 0x000000, 1 - 1 / (currentDist + 1));
+	return (c);
 }
 
 void	draw_gui(t_core *cr)

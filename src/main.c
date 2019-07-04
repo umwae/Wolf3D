@@ -29,20 +29,22 @@ void	err_ex(int pr)
 
 int		hooks(t_core *cr)
 {
-	// int ms = 0;
-	// int msp = 0;
-	// int i = 0;
-
-	// while(i < 999999)
-	// {
-	// 	msp = ms;
-	// 	while (ms - msp < 3000)
-	// 	{
-	// 		ms = clock() * 1000 / CLOCKS_PER_SEC;
-	// 	}
-	// 	key_action(13, cr);
-	// 	i++;
-	// }
+// 	int ms = 0;
+// 	int msp = 0;
+// 	int i = 0;
+//
+// visual(cr);
+// 	while(i < 999999)
+// 	{
+// 		msp = ms;
+// 		while (ms - msp < 3000)
+// 		{
+// 			ms = clock() * 1000 / CLOCKS_PER_SEC;
+// 		}
+// 		key_action(13, cr);
+// 		i++;
+// 	}
+	// printf("%d\n", milliseconds_since);
 	visual(cr);
 	//
 	// mlx_hook(cr->win, 4, 1, mouse_press, cr);
