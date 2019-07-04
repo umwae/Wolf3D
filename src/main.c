@@ -13,6 +13,8 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include "wolf.h"
+#include <time.h>
+#include <stdio.h>
 
 void	err_ex(int pr)
 {
@@ -23,6 +25,32 @@ void	err_ex(int pr)
 	if (pr == 2)
 		ft_putstr("Error: can't read from file\n");
 	exit(1);
+}
+
+int		hooks(t_core *cr)
+{
+	// int ms = 0;
+	// int msp = 0;
+	// int i = 0;
+
+	// while(i < 999999)
+	// {
+	// 	msp = ms;
+	// 	while (ms - msp < 3000)
+	// 	{
+	// 		ms = clock() * 1000 / CLOCKS_PER_SEC;
+	// 	}
+	// 	key_action(13, cr);
+	// 	i++;
+	// }
+	visual(cr);
+	//
+	// mlx_hook(cr->win, 4, 1, mouse_press, cr);
+	// mlx_hook(cr->win, 5, 1, mouse_release, cr);
+	// mlx_hook(cr->win, 6, 1, mouse_move, cr);
+	mlx_hook(cr->win, 2, 1, key_action, cr);
+	mlx_loop(cr->mlx);
+	return (0);
 }
 
 int		main(int argc, char **argv)

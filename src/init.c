@@ -16,18 +16,6 @@
 #include <math.h>
 #include "wolf.h"
 
-int		hooks(t_core *cr)
-{
-	visual(cr);
-	//
-	// mlx_hook(cr->win, 4, 1, mouse_press, cr);
-	// mlx_hook(cr->win, 5, 1, mouse_release, cr);
-	// mlx_hook(cr->win, 6, 1, mouse_move, cr);
-	mlx_hook(cr->win, 2, 1, key_action, cr);
-	mlx_loop(cr->mlx);
-	return (0);
-}
-
 void		vector_init(t_core *cr)
 {
 	cr->player.x = 6.5; //Добавить функцию поиска свободной клетки

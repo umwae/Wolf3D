@@ -25,7 +25,7 @@ FT_PATH=./libft
 BIN_PATH=./bin
 
 SRC= main.c parser.c actions.c visual.c \
-image.c render.c raycast.c castman.c \
+image.c render.c raycast.c algos.c \
 matrix.c init.c minimap.c objects.c
 OBJ:= $(addprefix $(BIN_PATH)/,$(SRC:.c=.o))
 
