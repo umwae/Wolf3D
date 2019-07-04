@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "wolf.h"
 
-int			key_action(int keycode, t_win *cr)
+int			key_action(int keycode, t_core *cr)
 {
 	double	tmp_p_x;
 	double	tmp_p_y;
@@ -54,9 +54,9 @@ int			key_action(int keycode, t_win *cr)
 		transform(cr, &(cr->plane.x), &(cr->plane.y), 'R');
 	}
 	//
-	if (cr->tiles[(int)tmp_p_y][(int)cr->player.x] == 0 && tmp_p_y <= cr->y_len)
+	if (cr->tiles[(int)tmp_p_y][(int)cr->player.x] == 0 && tmp_p_y <= cr->map_h)
 		cr->player.y = tmp_p_y;
-	if (cr->tiles[(int)cr->player.y][(int)tmp_p_x] == 0 && tmp_p_x <= cr->x_len)
+	if (cr->tiles[(int)cr->player.y][(int)tmp_p_x] == 0 && tmp_p_x <= cr->map_w)
 		cr->player.x = tmp_p_x;
 	check_obj(cr);
 	visual(cr);

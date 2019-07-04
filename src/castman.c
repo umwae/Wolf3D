@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include "wolf.h"
 
-void		bresenham(t_win *cr)
+void		bresenham(t_core *cr)
 {
 	int		x0;
 	int		y0;
@@ -38,7 +38,7 @@ void		bresenham(t_win *cr)
   	}
 }
 
-void	dda2(t_win *cr)
+void	dda2(t_core *cr)
 {
     int mapX = (int)cr->player.x;
     int mapY = (int)cr->player.y;
@@ -74,7 +74,7 @@ void	dda2(t_win *cr)
         stepY = 1;
         sideDistY = (mapY + 1.0 - cr->player.y) * deltaDistY;
     }
-    while (hit == 0 && (mapX < cr->x_len && mapY <= cr->y_len))
+    while (hit == 0 && (mapX < cr->map_w && mapY <= cr->map_h))
     {
     	if (sideDistX < sideDistY)
         {
@@ -88,8 +88,8 @@ void	dda2(t_win *cr)
           mapY += stepY;
           side = 1;
         }
-        if (cr->tiles[mapY][mapX] > 0 || (mapX > cr->x_len || mapY > cr->y_len))
-				hit = 1;
+        if (((cr->wtexnum = cr->tiles[mapY][mapX]) > 0) || (mapX > cr->map_w || mapY > cr->map_h))
+					hit = 1;
     }
 	if (side == 0)
 		cr->dist = (mapX - cr->player.x + (1 - stepX) / 2) / cr->castx;
@@ -127,10 +127,10 @@ void	dda2(t_win *cr)
         cr->hity = mapY + 1.0;
 		cr->wall = 's';
       }
-	if (cr->hitx > cr->x_len)
-		cr->hitx = cr->x_len - 1;
-	if (cr->hity > cr->y_len)
-		cr->hity = cr->y_len - 1;
+	if (cr->hitx > cr->map_w)
+		cr->hitx = cr->map_w - 1;
+	if (cr->hity > cr->map_h)
+		cr->hity = cr->map_h - 1;
 	if (cr->hitx < 1)
 		cr->hitx = 1;
 	if (cr->hity < 1)

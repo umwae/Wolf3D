@@ -14,7 +14,7 @@
 #include <math.h>
 #include <stdio.h>
 
-void			transform(t_win *win1, double *x0, double *y0, char dir)
+void			transform(t_core *win1, double *x0, double *y0, char dir)
 {
 	double	x;
 	double	y;

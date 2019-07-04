@@ -15,7 +15,7 @@
 #include <stdio.h>
 
 
-static int		colors(t_win *cr, int i, double column)
+static int		colors(t_core *cr, int i, double column)
 {
 	int tx;
 	double	ty;
@@ -24,16 +24,16 @@ static int		colors(t_win *cr, int i, double column)
 	int c;
 
 
-	if (cr->wall == 'n')
-		cr->objcl = 0xff0000;
-	else if (cr->wall == 's')
-		cr->objcl = 0x00ff00;
-	else if (cr->wall == 'w')
-		cr->objcl = 0x0000ff;
-	else if (cr->wall == 'e')
-		cr->objcl = 0xffffff;
-	else if (cr->wall == ' ')
-		cr->objcl = 0x000000;
+	// if (cr->wall == 'n')
+	// 	cr->objcl = 0xff0000;
+	// else if (cr->wall == 's')
+	// 	cr->objcl = 0x00ff00;
+	// else if (cr->wall == 'w')
+	// 	cr->objcl = 0x0000ff;
+	// else if (cr->wall == 'e')
+	// 	cr->objcl = 0xffffff;
+	// else if (cr->wall == ' ')
+	// 	cr->objcl = 0x000000;
 
 	if (cr->wall == 'n' || cr->wall == 's')
 		x = cr->hitx;
@@ -41,16 +41,13 @@ static int		colors(t_win *cr, int i, double column)
 		x = cr->hity;
 	tx = (x - (int)x) * TEXSIZE;
 	ty = (double)TEXSIZE / column;
-	// printf("%d %d | ", cr->hitx, cr->hity);
 	t = i * ty;
-	// if (cr->rcurr == 1)
-	// 	cr->objcl = 0x0000ff;
-	c = cr->addrtext[tx + (t * TEXSIZE)];
+	c = cr->textures[cr->wtexnum][tx + (t * TEXSIZE)];
 		return (c);
 		// return (cr->objcl);
 }
 
-int	floormap(double y, double distWall, t_win *cr)
+int	floormap(double y, double distWall, t_core *cr)
 {
 	double distPlayer;
 	double currentDist;
@@ -66,11 +63,11 @@ int	floormap(double y, double distWall, t_win *cr)
     floorTexX = (int)(currentFloorX * TEXSIZE) % TEXSIZE;
     floorTexY = (int)(currentFloorY * TEXSIZE) % TEXSIZE;
 
-   c = cr->floortext[TEXSIZE * floorTexY + floorTexX];
+   c = cr->textures[FLOORTEX][TEXSIZE * floorTexY + floorTexX];
    return (c);
 }
 
-void	draw_gui(t_win *cr)
+void	draw_gui(t_core *cr)
 {
 	char	*string;
 
@@ -78,7 +75,7 @@ void	draw_gui(t_win *cr)
 	mlx_string_put(cr->mlx, cr->win, WIN_WIDTH * 0.05, WIN_HIGHT * 0.95, 0xffffff, string);
 }
 
-void	draw(t_win *cr, int ray)
+void	draw(t_core *cr, int ray)
 {
 	int i;
 	double	column;

@@ -13,7 +13,7 @@
 #include "wolf.h"
 #include "stdio.h"
 
-void		img_new(t_win *cr)
+void		img_new(t_core *cr)
 {
 	char	*img;
 
@@ -25,7 +25,7 @@ void		img_new(t_win *cr)
 	cr->addr = (int *)cr->image;
 }
 
-void		img_pxl(t_win *cr, int x, int y, int color)
+void		img_pxl(t_core *cr, int x, int y, int color)
 {
 	char	*p;
 

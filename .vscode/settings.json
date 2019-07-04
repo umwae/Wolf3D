@@ -1,0 +1,6 @@
+{
+    "files.autoSaveDelay": 99999999999,
+    "editor.fontSize": 14,
+    "debug.internalConsoleOptions": "openOnSessionStart",
+    "debug.showInStatusBar": "always"
+}

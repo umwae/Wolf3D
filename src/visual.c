@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void			visual(t_win *cr)
+void			visual(t_core *cr)
 {
 	mlx_destroy_image(cr->mlx, cr->img_ptr);
 	img_new(cr);
@@ -24,11 +24,4 @@ void			visual(t_win *cr)
 	minimap(cr);
 	mlx_put_image_to_window(cr->mlx, cr->win, cr->img_ptr, 0, 0);
 	draw_gui(cr);
-	// int i = 0;
-	// while (i < cr->spritesnum)
-	// {
-	// 	printf("%f\n", cr->sprOrder[i].sprdist);
-	// 	i++;
-	// }
-	// printf("---------\n");
 }

@@ -27,9 +27,9 @@ void	err_ex(int pr)
 
 int		main(int argc, char **argv)
 {
-	t_win		*cr;
+	t_core		*cr;
 
-	if (!(cr = (t_win *)malloc(sizeof(t_win))))
+	if (!(cr = (t_core *)malloc(sizeof(t_core))))
 		err_ex(0);
 	init(argv[1], cr);
 	hooks(cr);

@@ -14,20 +14,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-static void	draw_objects(t_win *cr)
+static void	draw_objects(t_core *cr)
 {
 	int	i = 0;
 
 	cr->vs->vcolor = 0xffffff;
 	while (i < cr->spritesnum)
 	{
-		draw_rectangle(cr, cr->sprOrder[i].x * cr->vs->gridsize + cr->vs->x_offset - 3, \
-			cr->sprOrder[i].y * cr->vs->gridsize + cr->vs->y_offset - 3, 6, 6);
+		draw_rectangle(cr, cr->objarr[i].x * cr->vs->gridsize + cr->vs->x_offset - 3, \
+			cr->objarr[i].y * cr->vs->gridsize + cr->vs->y_offset - 3, 6, 6);
 		i++;
 	}
 }
 
-static void	draw_player(t_win *cr)
+static void	draw_player(t_core *cr)
 {
 	cr->vs->vcolor = 0x00ff00;
 	draw_rectangle(cr, cr->player.x * cr->vs->gridsize + cr->vs->x_offset - 3, \
@@ -40,14 +40,14 @@ static void	draw_player(t_win *cr)
 	bresenham(cr);
 }
 
-static void	draw_walls(t_win *cr)
+static void	draw_walls(t_core *cr)
 {
 	int		xlen;
-	int		ylen = cr->y_len;
+	int		ylen = cr->map_h;
 	cr->vs->vcolor = 0x909497;
 	while(ylen--)
 	{
-		xlen = cr->x_len;
+		xlen = cr->map_w;
 		while(xlen--)
 		{
 			if (cr->tiles[ylen][xlen] != 0)
@@ -57,39 +57,39 @@ static void	draw_walls(t_win *cr)
 	}
 }
 
-static void	draw_grid(t_win *cr)
+static void	draw_grid(t_core *cr)
 {
-	int		y_len;
-	int		x_len;
+	int		map_h;
+	int		map_w;
 	int		yp = cr->vs->gridsize;
 
 	cr->vs->vcolor = 0x909497;
-	y_len = cr->y_len;
-	x_len = cr->x_len - 1;
-	while (y_len--)
+	map_h = cr->map_h;
+	map_w = cr->map_w - 1;
+	while (map_h--)
 	{
 		cr->vs->x_i = cr->vs->x_offset;
 		cr->vs->y_i = cr->vs->y_offset + yp;
-		cr->vs->x2_i = cr->vs->x_offset + cr->vs->gridsize * (cr->x_len - 1);
+		cr->vs->x2_i = cr->vs->x_offset + cr->vs->gridsize * (cr->map_w - 1);
 		cr->vs->y2_i = cr->vs->y_offset + yp;
 		bresenham(cr);
-		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->x_len, cr->y_len, cr->vs->gridsize);
+		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->map_w, cr->map_h, cr->vs->gridsize);
 		yp += cr->vs->gridsize;
 	}
 	yp = cr->vs->gridsize;
-	while (x_len--)
+	while (map_w--)
 	{
 		cr->vs->x_i = cr->vs->x_offset + yp;
 		cr->vs->y_i = cr->vs->y_offset;
 		cr->vs->x2_i = cr->vs->x_offset + yp;
-		cr->vs->y2_i = cr->vs->y_offset + cr->vs->gridsize * (cr->y_len - 1);
+		cr->vs->y2_i = cr->vs->y_offset + cr->vs->gridsize * (cr->map_h - 1);
 		bresenham(cr);
-		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->x_len, cr->y_len, cr->vs->gridsize);
+		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->map_w, cr->map_h, cr->vs->gridsize);
 		yp += cr->vs->gridsize;
 	}
 }
 
-void		draw_rectangle(t_win *cr, int x, int y, int xlen, int ylen)
+void		draw_rectangle(t_core *cr, int x, int y, int xlen, int ylen)
 {
 	while (ylen--)
 	{
@@ -101,20 +101,20 @@ void		draw_rectangle(t_win *cr, int x, int y, int xlen, int ylen)
 	}
 }
 
-void		minimap(t_win *cr)
+void		minimap(t_core *cr)
 {
-		draw_rectangle(cr, cr->vs->x_offset, cr->vs->y_offset, cr->vs->gridsize * (cr->x_len - 1), cr->vs->gridsize * (cr->y_len - 1));
+		draw_rectangle(cr, cr->vs->x_offset, cr->vs->y_offset, cr->vs->gridsize * (cr->map_w - 1), cr->vs->gridsize * (cr->map_h - 1));
 		draw_grid(cr);
 		draw_walls(cr);
 		draw_objects(cr);
 		draw_player(cr);
 }
 
-void		minimap_init(t_win *cr)
+void		minimap_init(t_core *cr)
 {
 	cr->vs->mmsize = 300;
-	cr->vs->gridsize = cr->x_len > cr->y_len ? (double)cr->vs->mmsize / cr->x_len : (double)cr->vs->mmsize / cr->y_len;
-	cr->vs->x_offset = WIN_WIDTH - cr->vs->gridsize * (cr->x_len);
+	cr->vs->gridsize = cr->map_w > cr->map_h ? (double)cr->vs->mmsize / cr->map_w : (double)cr->vs->mmsize / cr->map_h;
+	cr->vs->x_offset = WIN_WIDTH - cr->vs->gridsize * (cr->map_w);
 	cr->vs->y_offset = 0;
 	cr->vs->vcolor = 0x34495E;
 }
