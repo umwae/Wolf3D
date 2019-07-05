@@ -20,7 +20,7 @@ void	renderspr(t_core *cr, int ray, double column, int startspr, int endspr, int
 		tx = (double)(endspr - ray) / (endspr - startspr) * cr->objarr[objnum].texsize;
 		ty = (double)(cr->objarr[objnum].texsize) / column;
 		t = i * ty;
-		c = cr->textures[cr->objarr[objnum].tex][tx + (t * cr->objarr[objnum].texsize)];
+		c = getgrad(cr->textures[cr->objarr[objnum].tex][tx + (t * cr->objarr[objnum].texsize)], 0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
 		if (((c >> 16) & 0xff) != 0)
 			cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
 		i++;
@@ -46,9 +46,9 @@ void	sprite(t_core *cr)
 	int	st;
 	int	nd;
 
-	i = 0;
+	i = cr->spritesnum - 1;
 	calc_dist(cr);
-	while (i < cr->spritesnum)
+	while (i >= 0)
 	{
 		double	sprX = cr->objarr[i].x - cr->player.x;
 		double	sprY = cr->objarr[i].y - cr->player.y;
@@ -81,7 +81,7 @@ void	sprite(t_core *cr)
 				renderspr(cr, WIN_WIDTH - stripe, spriteH, st, nd, i);
 			stripe++;
 		}
-		i++;
+		i--;
 	}
 }
 
@@ -139,7 +139,7 @@ void		obj_init(t_core *cr)
 	t_obj	sprarr[SPRITESNUM] =
 	{{6.5, 5.5, 3, 592, 0.0, 'c', 1},
 	{3.5, 7.5, 3, 592, 0.0, 'c', 1},
-	{8.5, 2.5, 3, 592, 0.0, 'c', 1}};
+	{8.5, 2.5, 11, 966, 0.0, 'c', 1}};
 	int	i = 0;
 	while (i < cr->spritesnum)
 	{

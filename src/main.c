@@ -24,6 +24,8 @@ void	err_ex(int pr)
 		ft_putstr("Error: invalid map\n");
 	if (pr == 2)
 		ft_putstr("Error: can't read from file\n");
+	if (pr == 3)
+		ft_putstr("Usage: ./wolf3d map_name\n");
 	exit(1);
 }
 
@@ -59,6 +61,8 @@ int		main(int argc, char **argv)
 {
 	t_core		*cr;
 
+	if (argc != 2)
+		err_ex(3);
 	if (!(cr = (t_core *)malloc(sizeof(t_core))))
 		err_ex(0);
 	init(argv[1], cr);

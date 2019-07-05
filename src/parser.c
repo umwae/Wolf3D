@@ -46,15 +46,14 @@ void			get_map(int fd0, int fd, t_core *cr)
 	cr->map_w = ft_ctwords(line, ' ');
 	free(line);
 	img_new(cr);
-	// cr->map_h = yc;
-	// cr->tiles = (int **)malloc(sizeof(int *) * cr->map_h + 1);//+1 ??????
 	while (get_next_line(fd0, &line) == 1)
 	{
 		yc++;
 		free(line);
 	}
 	cr->map_h = yc;
-	cr->tiles = (int **)malloc(sizeof(int *) * cr->map_h);
+	if (!(cr->tiles = (int **)malloc(sizeof(int *) * cr->map_h)))
+		err_ex(0);
 	yc = 0;
 	while (get_next_line(fd, &line) == 1)
 	{

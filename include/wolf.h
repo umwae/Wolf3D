@@ -96,7 +96,7 @@ typedef struct		s_core
 # define SPEED 0.3
 # define MAX_DIST 35//!!!!!!!!!!!!!!!!!!!!
 # define TEXSIZE 700
-# define TEXNUM 10//Число текстур
+# define TEXNUM 11//Число текстур
 # define SPRITESNUM 3//Число спрайтов
 # define FLOORTEX 2//Номер текстуры пола
 
@@ -130,5 +130,7 @@ void				sort_obj(t_core *cr);
 void				check_obj(t_core *cr);
 void				draw_gui(t_core *cr);
 void				obj_init(t_core *cr);
+//
+int				getgrad(int color1, int color2, double passed);
 
 #endif

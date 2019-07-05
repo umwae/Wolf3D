@@ -13,13 +13,14 @@
 
 #include "wolf.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 static int		blender(int sc1, int sc2, double passed)
 {
 	return ((1 - passed) * sc1 + passed * sc2);
 }
 
-static int				getgrad(int color1, int color2, double passed)
+int				getgrad(int color1, int color2, double passed)
 {
 	int		red;
 	int		green;
@@ -62,7 +63,7 @@ static int		colors(t_core *cr, int i, double column)
 	t = i * ty;
 	// if (1 / cr->dist > 1)
 	// 	return (0xffffff);
-	c = getgrad(getgrad(cr->textures[cr->wtexnum][tx + (t * TEXSIZE)], 0x7B241C, 1/(cr->dist + 1)), 0x000000, 1 - 1 / (cr->dist + 1));
+	c = getgrad(cr->textures[cr->wtexnum][tx + (t * TEXSIZE)], 0, 1 - 1 / (cr->dist + 1));
 		return (c);
 		// return (cr->objcl);
 }
@@ -85,7 +86,7 @@ int	floormap(double y, double distWall, t_core *cr)
 
 	// if (1 / currentDist > 1)
 	// return (0xffffff);
-	c = getgrad(getgrad(cr->textures[FLOORTEX][TEXSIZE * floorTexY + floorTexX], 0x7B241C, 1/(currentDist + 1)), 0x000000, 1 - 1 / (currentDist + 1));
+	c = getgrad(getgrad(cr->textures[FLOORTEX][TEXSIZE * floorTexY + floorTexX], 0xffffff, 1/(currentDist + 1)), 0x000000, 1 - 1 / (currentDist + 1));
 	return (c);
 }
 
@@ -95,6 +96,7 @@ void	draw_gui(t_core *cr)
 
 	string = ft_strjoin("COINS ", ft_itoa(cr->coins));
 	mlx_string_put(cr->mlx, cr->win, WIN_WIDTH * 0.05, WIN_HIGHT * 0.95, 0xffffff, string);
+	free(string);
 }
 
 void	draw(t_core *cr, int ray)
