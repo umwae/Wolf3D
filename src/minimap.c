@@ -22,22 +22,24 @@ static void	draw_objects(t_core *cr)
 	while (i < cr->spritesnum)
 	{
 		draw_rectangle(cr, cr->objarr[i].x * cr->vs->gridsize + cr->vs->x_offset - 3, \
-			cr->objarr[i].y * cr->vs->gridsize + cr->vs->y_offset - 3, 6, 6);
+			cr->objarr[i].y * cr->vs->gridsize + cr->vs->y_offset - 3, cr->vs->gridsize / 3, cr->vs->gridsize / 3);
 		i++;
 	}
 }
 
 static void	draw_player(t_core *cr)
 {
-	cr->vs->vcolor = 0x00ff00;
-	draw_rectangle(cr, cr->player.x * cr->vs->gridsize + cr->vs->x_offset - 3, \
-		cr->player.y * cr->vs->gridsize + cr->vs->y_offset - 3, 6, 6);
+	int		pp = cr->vs->gridsize / 3;
+
 	cr->vs->vcolor = 0xffffff;
 	cr->vs->x_i = cr->player.x * cr->vs->gridsize + cr->vs->x_offset;
 	cr->vs->y_i = cr->player.y * cr->vs->gridsize + cr->vs->y_offset;
 	cr->vs->x2_i = cr->player.x * cr->vs->gridsize + cr->dir.x / cr->dir.len * 2 * cr->vs->gridsize + cr->vs->x_offset;
 	cr->vs->y2_i = cr->player.y * cr->vs->gridsize + cr->dir.y / cr->dir.len * 2 * cr->vs->gridsize + cr->vs->y_offset;
 	bresenham(cr);
+	cr->vs->vcolor = 0x00ff00;
+	draw_rectangle(cr, cr->player.x * cr->vs->gridsize + cr->vs->x_offset - pp / 2, \
+		cr->player.y * cr->vs->gridsize + cr->vs->y_offset - pp / 2, pp, pp);
 }
 
 static void	draw_walls(t_core *cr)
