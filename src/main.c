@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/06/21 20:03:23 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/06 18:15:45 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int		main(int argc, char **argv)
 	if (!(cr = (t_core *)malloc(sizeof(t_core))))
 		err_ex(0);
 	init(argv[1], cr);
+	get_obj(cr, argv[1]);
 	hooks(cr);
 	(void)argc;
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 17:02:06 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/06 18:12:16 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,8 @@ typedef struct		s_obj
 {
 	double		x;
 	double		y;
-	int				tex;
-	int				texsize;
+	int			tex;
 	double		dist;
-	char			type;
-	int				val;
 }									t_obj;
 
 typedef struct		s_core
@@ -133,5 +130,6 @@ void				draw_gui(t_core *cr);
 void				obj_init(t_core *cr);
 //
 int				getgrad(int color1, int color2, double passed);
+void			get_obj(t_core *cr, char *argv);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/02 21:19:56 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 18:14:54 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		init(char *argv, t_core *cr)
 	if (!(cr->objarr = (t_obj *)malloc(sizeof(t_obj) * SPRITESNUM)))
 		err_ex(0);
 	cr->spritesnum = SPRITESNUM;
-	obj_init(cr);
+	// obj_init(cr);
 	x = TEXSIZE;
 	y = TEXSIZE;
 	if (!(cr->textures = (int **)malloc(sizeof(int *) * TEXNUM)))

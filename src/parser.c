@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:10 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/06/21 20:38:32 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 18:32:44 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void			get_map(int fd0, int fd, t_core *cr)
 	img_new(cr);
 	while (get_next_line(fd0, &line) == 1)
 	{
+		if (line[0] == 0 || line[0] == '\n')
+		{
+			free(line);
+			break ;
+		}
 		yc++;
 		free(line);
 	}
@@ -57,6 +62,11 @@ void			get_map(int fd0, int fd, t_core *cr)
 	yc = 0;
 	while (get_next_line(fd, &line) == 1)
 	{
+		if (line[0] == 0 || line[0] == '\n')
+		{
+			free(line);
+			break ;
+		}
 		if (!((cr->tiles)[yc] = (int *)malloc(sizeof(int) * cr->map_w)))
 			err_ex(0);
 		map_line(line, yc, cr);

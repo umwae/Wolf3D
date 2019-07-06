@@ -17,10 +17,10 @@ void	renderspr(t_core *cr, int ray, double column, int startspr, int endspr, int
 	beg = (WIN_HIGHT - column) / 2;
 	while (i < column && (i + beg) < WIN_HIGHT)
 	{
-		tx = (double)(endspr - ray) / (endspr - startspr) * cr->objarr[objnum].texsize;
-		ty = (double)(cr->objarr[objnum].texsize) / column;
+		tx = (double)(endspr - ray) / (endspr - startspr) * 592;
+		ty = (double)(592) / column;
 		t = i * ty;
-		c = getgrad(cr->textures[cr->objarr[objnum].tex][tx + (t * cr->objarr[objnum].texsize)], 0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
+		c = getgrad(cr->textures[cr->objarr[objnum].tex][tx + (t * 592)], 0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
 		if (((c >> 16) & 0xff) != 0)
 			cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
 		i++;
@@ -115,10 +115,7 @@ static void	remove_obj(t_core *cr)
 
 void		pickup_obj(t_core *cr)
 {
-	if (cr->objarr[0].type == 'c')
-	{
-		cr->coins += cr->objarr[0].val;
-	}
+	cr->coins += 1;
 	remove_obj(cr);
 }
 
@@ -132,25 +129,25 @@ void		check_obj(t_core *cr)
 		pickup_obj(cr);
 }
 
-void		obj_init(t_core *cr)
-{
-	int		y;
-
-	t_obj	sprarr[SPRITESNUM] =
-	{{6.5, 5.5, 3, 592, 0.0, 'c', 1},
-	{3.5, 7.5, 3, 592, 0.0, 'c', 1},
-	{8.5, 2.5, 11, 966, 0.0, 'c', 1}};
-	int	i = 0;
-	while (i < cr->spritesnum)
-	{
-		cr->objarr[i].x = sprarr[i].x;
-		cr->objarr[i].y = sprarr[i].y;
-		cr->objarr[i].tex = sprarr[i].tex;
-		cr->objarr[i].texsize = sprarr[i].texsize;
-		cr->objarr[i].type = sprarr[i].type;
-		cr->objarr[i].val = sprarr[i].val;
-		// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/coin.xpm", &(cr->objarr[i].texsize), &y);
-		// cr->objarr[i].tex = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
-		i++;
-	}
-}
+// void		obj_init(t_core *cr)
+// {
+// 	int		y;
+//
+// 	t_obj	sprarr[SPRITESNUM] =
+// 	{{6.5, 5.5, 3, 592, 0.0, 'c', 1},
+// 	{3.5, 7.5, 3, 592, 0.0, 'c', 1},
+// 	{8.5, 2.5, 11, 966, 0.0, 'c', 1}};
+// 	int	i = 0;
+// 	while (i < cr->spritesnum)
+// 	{
+// 		cr->objarr[i].x = sprarr[i].x;
+// 		cr->objarr[i].y = sprarr[i].y;
+// 		cr->objarr[i].tex = sprarr[i].tex;
+// 		cr->objarr[i].texsize = sprarr[i].texsize;
+// 		cr->objarr[i].type = sprarr[i].type;
+// 		cr->objarr[i].val = sprarr[i].val;
+// 		// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/coin.xpm", &(cr->objarr[i].texsize), &y);
+// 		// cr->objarr[i].tex = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
+// 		i++;
+// 	}
+// }
