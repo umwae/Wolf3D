@@ -95,7 +95,7 @@ void	write_obj(t_core *cr, int fd, int count)
 		}
 		if (ft_strcmp("obj:", line) == 0)
 			i = 1;
-		// free(line);
+		free(line);
 	}
 	// cr->cspr = count;
 	// cr->sprite = spr;

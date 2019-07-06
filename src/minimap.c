@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 21:01:28 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/02 19:19:06 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	draw_walls(t_core *cr)
 		while(xlen--)
 		{
 			if (cr->tiles[ylen][xlen] != 0)
-			draw_rectangle(cr, xlen * cr->vs->gridsize, \
-				ylen * cr->vs->gridsize, cr->vs->gridsize, cr->vs->gridsize);
+			draw_rectangle(cr, cr->vs->x_offset + xlen * cr->vs->gridsize, \
+				cr->vs->y_offset + ylen * cr->vs->gridsize, cr->vs->gridsize, cr->vs->gridsize);
 		}
 	}
 }
@@ -70,10 +70,10 @@ static void	draw_grid(t_core *cr)
 	map_w = cr->map_w - 1;
 	while (map_h--)
 	{
-		cr->vs->x_i = 0;
-		cr->vs->y_i = yp;
-		cr->vs->x2_i = cr->vs->gridsize * (cr->map_w - 1);
-		cr->vs->y2_i = yp;
+		cr->vs->x_i = cr->vs->x_offset;
+		cr->vs->y_i = cr->vs->y_offset + yp;
+		cr->vs->x2_i = cr->vs->x_offset + cr->vs->gridsize * (cr->map_w - 1);
+		cr->vs->y2_i = cr->vs->y_offset + yp;
 		bresenham(cr);
 		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->map_w, cr->map_h, cr->vs->gridsize);
 		yp += cr->vs->gridsize;
@@ -81,10 +81,10 @@ static void	draw_grid(t_core *cr)
 	yp = cr->vs->gridsize;
 	while (map_w--)
 	{
-		cr->vs->x_i = yp;
-		cr->vs->y_i = 0;
-		cr->vs->x2_i = yp;
-		cr->vs->y2_i = cr->vs->gridsize * (cr->map_h - 1);
+		cr->vs->x_i = cr->vs->x_offset + yp;
+		cr->vs->y_i = cr->vs->y_offset;
+		cr->vs->x2_i = cr->vs->x_offset + yp;
+		cr->vs->y2_i = cr->vs->y_offset + cr->vs->gridsize * (cr->map_h - 1);
 		bresenham(cr);
 		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->map_w, cr->map_h, cr->vs->gridsize);
 		yp += cr->vs->gridsize;
@@ -105,31 +105,18 @@ void		draw_rectangle(t_core *cr, int x, int y, int xlen, int ylen)
 
 void		minimap(t_core *cr)
 {
-		// draw_rectangle(cr, cr->vs->x_offset, cr->vs->y_offset, cr->vs->gridsize * (cr->map_w - 1), cr->vs->gridsize * (cr->map_h - 1));
-		// draw_grid(cr);
-		// draw_walls(cr);
-		mlx_put_image_to_window(cr->mlx, cr->win, cr->mm_img_ptr, cr->vs->x_offset, cr->vs->y_offset);
-		//
-		cr->print_func = &pxl_put_wrap;
+		draw_rectangle(cr, cr->vs->x_offset, cr->vs->y_offset, cr->vs->gridsize * (cr->map_w - 1), cr->vs->gridsize * (cr->map_h - 1));
+		draw_grid(cr);
+		draw_walls(cr);
 		draw_objects(cr);
 		draw_player(cr);
-		cr->print_func = &img_pxl;
 }
 
 void		minimap_init(t_core *cr)
 {
 	cr->vs->mmsize = 300;
 	cr->vs->gridsize = cr->map_w > cr->map_h ? (double)cr->vs->mmsize / cr->map_w : (double)cr->vs->mmsize / cr->map_h;
-	cr->vs->mmsize_y = cr->vs->gridsize * cr->map_h;
 	cr->vs->x_offset = WIN_WIDTH - cr->vs->gridsize * (cr->map_w);
 	cr->vs->y_offset = 0;
-	cr->vs->vcolor = MM_COLOR;
-	// printf("->%d\n", cr->vs->mmsize);
-	// fflush(stdout);
-	img_minimap_new(cr);
-	cr->img_switcher = cr->mm_image;
-	draw_rectangle(cr, 0, 0, cr->vs->gridsize * (cr->map_w - 1), cr->vs->gridsize * (cr->map_h - 1));
-	draw_grid(cr);
-	draw_walls(cr);
-	cr->img_switcher = cr->image;
+	cr->vs->vcolor = 0x34495E;
 }
