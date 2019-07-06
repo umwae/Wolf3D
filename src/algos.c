@@ -21,7 +21,8 @@ void		bresenham(t_core *cr)
 	int err = (dx > dy ? dx : -dy) / 2, e2;
  	while (x0 != x1 || y0 != y1)
 	{
-    	img_pxl(cr, x0, y0, cr->vs->vcolor);
+		(*(cr->print_func))((void *)cr, x0, y0, cr->vs->vcolor);
+    	// img_pxl(cr, x0, y0, cr->vs->vcolor);
     	// if (x0 == x1 && y0 == y1)
 		// 	break;
     	e2 = err;

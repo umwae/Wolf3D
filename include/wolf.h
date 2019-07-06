@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 18:12:16 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 20:53:31 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct		s_minimap//Для миникарты1
 	int				y_offset;
 	int				vcolor;
 	int				mmsize;
+	int				mmsize_y;
 	int				gridsize;
 }									t_minimap;
 
@@ -70,6 +71,8 @@ typedef struct		s_core
 	double		rotation;
 	char			*img_ptr;
 	void			*image;
+	char			*mm_img_ptr;//Для минимапы
+	void			*mm_image;//Для минимапы
 	int				linesize;
 	int     	bts;
 	// int				dragl;
@@ -98,6 +101,8 @@ typedef struct		s_core
 	int				spritesnum;//Текущее число спрайтов
 	int				**textures;//Все текстуры разом
 	int				wtexnum;//Номер текстуры стены, в которую попал луч
+	void			*img_switcher;//Указатель в какой имейдж печатать пиксель
+	void			(*print_func)(void *cr, int x, int y, int color);//Указатель на то какой функцией печатать
 }									t_core;
 
 # define ROTATION -0.1
@@ -108,13 +113,13 @@ typedef struct		s_core
 # define SPRITESNUM 3//Число спрайтов
 # define FLOORTEX 2//Номер текстуры пола
 # define CEILTEX 8 //Текстура потолка
-
+# define MM_COLOR 0x34495E //Цвет карты
 int					init(char *argv, t_core *cr);
 int					hooks(t_core *cr);
 void				get_map(int fd0, int fd, t_core *cr);
 void				visual(t_core *cr);
 void				img_new(t_core *cr);
-void				img_pxl(t_core *cr, int x, int y, int color);
+void				img_pxl(void *td, int x, int y, int color);
 int					key_action(int keycode, t_core *cr);
 void				err_ex(int pr);
 int					getgrad(int color1, int color2, double passed);
@@ -143,5 +148,7 @@ void				obj_init(t_core *cr);
 //
 int				getgrad(int color1, int color2, double passed);
 void			get_obj(t_core *cr, char *argv);
+void			img_minimap_new(t_core *cr);
+void			pxl_put_wrap(void *td, int x, int y, int color);
 
 #endif

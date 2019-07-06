@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visual.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 17:28:23 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/06 19:34:42 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void			visual(t_core *cr)
 	img_new(cr);
 	make_cast(cr);
 	sprite(cr);
-	minimap_init(cr);
-	minimap(cr);
+	// minimap_init(cr);
 	mlx_put_image_to_window(cr->mlx, cr->win, cr->img_ptr, 0, 0);
+	minimap(cr);
 	draw_gui(cr);
 }

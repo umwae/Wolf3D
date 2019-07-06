@@ -86,8 +86,8 @@ void	write_obj(t_core *cr, int fd, int count)
 	j = 0;
 	while (get_next_line(fd, &line) == 1)
 	{
-		// if (line[0] > 47 && line[0] < 58)
-		// 	break;
+		if (line[0] > 47 && line[0] < 58)
+			break;
 		if (i == 1)
 		{
 			writemass(&cr->objarr[j], line);
@@ -95,7 +95,7 @@ void	write_obj(t_core *cr, int fd, int count)
 		}
 		if (ft_strcmp("obj:", line) == 0)
 			i = 1;
-		free(line);
+		// free(line);
 	}
 	// cr->cspr = count;
 	// cr->sprite = spr;
