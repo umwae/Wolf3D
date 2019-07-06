@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:12:24 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/02 21:21:42 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 17:02:34 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,6 @@ static int		colors(t_core *cr, int i, double column)
 	int t;
 	int c;
 
-
-	// if (cr->wall == 'n')
-	// 	cr->objcl = 0xff0000;
-	// else if (cr->wall == 's')
-	// 	cr->objcl = 0x00ff00;
-	// else if (cr->wall == 'w')
-	// 	cr->objcl = 0x0000ff;
-	// else if (cr->wall == 'e')
-	// 	cr->objcl = 0xffffff;
-	// else if (cr->wall == ' ')
-	// 	cr->objcl = 0x000000;
-
 	if (cr->wall == 'n' || cr->wall == 's')
 		x = cr->hitx;
 	else
@@ -87,6 +75,28 @@ int	floormap(double y, double distWall, t_core *cr)
 	// if (1 / currentDist > 1)
 	// return (0xffffff);
 	c = getgrad(getgrad(cr->textures[FLOORTEX][TEXSIZE * floorTexY + floorTexX], 0xffffff, 1/(currentDist + 1)), 0x000000, 1 - 1 / (currentDist + 1));
+	return (c);
+}
+
+int	ceilmap(double y, double distWall, t_core *cr)
+{
+	double distPlayer;
+	double currentDist;
+	int c;
+
+    currentDist = (double)WIN_HIGHT / (2.0 * (double)y - (double)WIN_HIGHT);
+	double weight = currentDist / distWall;
+
+    double currentFloorX = weight * cr->hitx + (1.0 - weight) * cr->player.x;
+    double currentFloorY = weight * cr->hity + (1.0 - weight) * cr->player.y;
+
+    int floorTexX, floorTexY;
+    floorTexX = (int)(currentFloorX * TEXSIZE) % TEXSIZE;
+    floorTexY = (int)(currentFloorY * TEXSIZE) % TEXSIZE;
+
+	// if (1 / currentDist > 1)
+	// return (0xffffff);
+	c = getgrad(getgrad(cr->textures[CEILTEX][TEXSIZE * floorTexY + floorTexX], 0xffffff, 1/(currentDist + 1)), 0x000000, 1 - 1 / (currentDist + 1));
 	return (c);
 }
 
@@ -127,6 +137,8 @@ void	draw(t_core *cr, int ray)
 		}
 		else if (i > beg + column)
 			cr->addr[ray + (i * WIN_WIDTH)] = floormap(i, cr->dist, cr);
+		else
+			cr->addr[ray + (i * WIN_WIDTH)] = ceilmap(WIN_HIGHT - i, cr->dist, cr);
 		i++;
 	}
 }

@@ -15,7 +15,7 @@ void	renderspr(t_core *cr, int ray, double column, int startspr, int endspr, int
 
 	i = 0;
 	beg = (WIN_HIGHT - column) / 2;
-	while (i < column)
+	while (i < column && (i + beg) < WIN_HIGHT)
 	{
 		tx = (double)(endspr - ray) / (endspr - startspr) * cr->objarr[objnum].texsize;
 		ty = (double)(cr->objarr[objnum].texsize) / column;

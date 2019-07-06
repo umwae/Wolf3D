@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/02 22:01:49 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 17:02:06 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct		s_core
 # define TEXNUM 11//Число текстур
 # define SPRITESNUM 3//Число спрайтов
 # define FLOORTEX 2//Номер текстуры пола
+# define CEILTEX 6 //Текстура потолка
 
 int					init(char *argv, t_core *cr);
 int					hooks(t_core *cr);
