@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 18:12:16 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 20:12:23 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,28 @@ typedef struct		s_flc
 	int				flrty;
 	int				c;
 }									t_flc;
+
+typedef struct		s_sprq
+{
+	double			sprx;
+	double			spry;
+	double			invd;
+	double			tx;
+	double			ty;
+	double			mv;
+	int				mvspr;
+	int				sprh;
+	int				sprw;
+	int				bspr;
+	int				sprscrx;
+	int				u;
+	int				v;
+	int				i;
+	int				st;
+	int				nd;
+	int				espr;
+	int				strp;
+}									t_sprq;
 
 typedef struct		s_obj
 {
@@ -104,6 +126,7 @@ typedef struct		s_core
 # define SPEED 0.3
 # define MAX_DIST 35//!!!!!!!!!!!!!!!!!!!!
 # define TEXSIZE 700
+# define TEXOBJSIZE 592
 # define TEXNUM 11//Число текстур
 # define SPRITESNUM 3//Число спрайтов
 # define FLOORTEX 2//Номер текстуры пола
