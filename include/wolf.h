@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 17:02:06 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/06 18:22:22 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,17 @@ typedef struct		s_vec
 	double			dy;
 	double			len;
 }									t_vec;
+
+typedef struct		s_flc
+{
+	double			c_dist;
+	double			wght;
+	double			c_flrx;
+	double			c_flry;
+	int				flrtx;
+	int				flrty;
+	int				c;
+}									t_flc;
 
 typedef struct		s_obj
 {
@@ -99,7 +110,7 @@ typedef struct		s_core
 # define TEXNUM 11//Число текстур
 # define SPRITESNUM 3//Число спрайтов
 # define FLOORTEX 2//Номер текстуры пола
-# define CEILTEX 6 //Текстура потолка
+# define CEILTEX 8 //Текстура потолка
 
 int					init(char *argv, t_core *cr);
 int					hooks(t_core *cr);
@@ -109,6 +120,7 @@ void				img_new(t_core *cr);
 void				img_pxl(t_core *cr, int x, int y, int color);
 int					key_action(int keycode, t_core *cr);
 void				err_ex(int pr);
+int					getgrad(int color1, int color2, double passed);
 int					mouse_press(int button, int x, int y, t_core *cr);
 int					mouse_release(int button, int x, int y, t_core *cr);
 int					mouse_move(int x, int y, t_core *cr);
