@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:47 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 20:59:36 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 22:12:20 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ void		img_pxl(void *td, int x, int y, int color)
 		// printf("OOB! ");
 		return ;
 	}
+	// if (x >= cr->vs->mmsize - 1 || y >= cr->vs->mmsize_y - 1 || \
+	// 	x < 0 || y < 0)
+	// {
+	// 	printf("OOB! ");
+	// 	return ;
+	// }
 	// if (x > WIN_WIDTH)
 	// {
 	// 	printf("RIGHT! %d ", x);

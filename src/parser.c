@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:10 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 21:35:49 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 22:04:27 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,6 @@ void			get_mappart(t_core *cr, int fd, char *line, int yc)
 		yc++;
 		free(line);
 	}
-	vector_init(cr);
-	img_new(cr);
-	visual(cr);
-	close(fd);
 }
 
 void			get_map(int fd0, int fd, t_core *cr)
@@ -82,6 +78,6 @@ void			get_map(int fd0, int fd, t_core *cr)
 		free(line);
 	}
 	close(fd0);
-	close(fd);
 	get_mappart(cr, fd, line, yc);
+	close(fd);
 }

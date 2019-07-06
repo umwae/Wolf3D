@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 21:01:28 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 22:31:08 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ void		minimap(t_core *cr)
 		mlx_put_image_to_window(cr->mlx, cr->win, cr->mm_img_ptr, cr->vs->x_offset, cr->vs->y_offset);
 		//
 		cr->print_func = &pxl_put_wrap;
+		cr->img_switcher = cr->mm_image;
 		draw_objects(cr);
 		draw_player(cr);
-		cr->print_func = &img_pxl;
 }
 
 void		minimap_init(t_core *cr)
@@ -127,9 +127,9 @@ void		minimap_init(t_core *cr)
 	// printf("->%d\n", cr->vs->mmsize);
 	// fflush(stdout);
 	img_minimap_new(cr);
+	cr->print_func = &img_pxl;
 	cr->img_switcher = cr->mm_image;
 	draw_rectangle(cr, 0, 0, cr->vs->gridsize * (cr->map_w - 1), cr->vs->gridsize * (cr->map_h - 1));
 	draw_grid(cr);
 	draw_walls(cr);
-	cr->img_switcher = cr->image;
 }

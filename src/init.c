@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 21:35:52 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 22:29:04 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int		init(char *argv, t_core *cr)
 		err_ex(0);
 	if (!(cr->vs = (t_minimap *)malloc(sizeof(t_minimap))))
 		err_ex(0);
-	cr->print_func = &img_pxl;
 	cr->rotation = ROTATION;
 	if (!(cr->objarr = (t_obj *)malloc(sizeof(t_obj) * SPRITESNUM)))
 		err_ex(0);
@@ -68,7 +67,6 @@ int		init(char *argv, t_core *cr)
 	y = TEXSIZE;
 	if (!(cr->textures = (int **)malloc(sizeof(int *) * TEXNUM)))
 		err_ex(0);
-	cr->img_switcher = cr->image;
 	// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/texture1.xpm", &x, &y);
 	// cr->addrtext = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
 	// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/texture2.xpm", &x, &y);
