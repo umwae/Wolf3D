@@ -1,26 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   objects.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/06 19:07:09 by adoyle            #+#    #+#             */
+/*   Updated: 2019/07/06 21:19:28 by adoyle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
 #include <stdlib.h>
 #include "wolf.h"
 
-void	renderspr(t_core *cr, int ray, double column, int startspr, int endspr, int objnum)
+void	renderspr(t_core *cr, int ray, t_sprq *spr, int objnum)
 {
-	int i;
-	int	beg;
-	int tx;
+	int		i;
+	int		beg;
+	int		tx;
 	double	ty;
-	int t;
-	int c;
+	int		c;
 
 	i = 0;
-	beg = (WIN_HIGHT - column) / 2;
-	while (i < column && (i + beg) < WIN_HIGHT)
+	beg = (WIN_HIGHT - spr->sprh) / 2;
+	while (i < spr->sprh && (i + beg) < WIN_HIGHT)
 	{
-		tx = (double)(endspr - ray) / (endspr - startspr) * 592;
-		ty = (double)(592) / column;
-		t = i * ty;
-		c = getgrad(cr->textures[cr->objarr[objnum].tex][tx + (t * 592)], 0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
+		tx = (double)(spr->nd - ray) / (spr->nd - spr->st) * 592;
+		ty = (double)(592) / spr->sprh;
+		c = getgrad(cr->textures[cr->objarr[objnum].tex]
+			[tx + ((int)(i * ty) * 592)],
+			0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
 		if (((c >> 16) & 0xff) != 0)
 			cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
 		i++;
@@ -29,82 +41,93 @@ void	renderspr(t_core *cr, int ray, double column, int startspr, int endspr, int
 
 static void	calc_dist(t_core *cr)
 {
-	int i = 0;
+	int i;
 
+	i = 0;
 	while (i < cr->spritesnum)
 	{
-		(cr->objarr[i].dist) = ((cr->player.x - cr->objarr[i].x) * (cr->player.x - cr->objarr[i].x) + \
+		(cr->objarr[i].dist) = ((cr->player.x - cr->objarr[i].x) *
+		(cr->player.x - cr->objarr[i].x) + \
 		(cr->player.y - cr->objarr[i].y) * (cr->player.y - cr->objarr[i].y));
 		i++;
 	}
 }
 
+void	spritecalc(t_sprq *spr, t_core *cr, int i)
+{
+	spr->sprx = cr->objarr[i].x - cr->player.x;
+	spr->spry = cr->objarr[i].y - cr->player.y;
+	spr->invd = 1.0 / (cr->plane.x * cr->dir.y - cr->dir.x * cr->plane.y);
+	spr->tx = spr->invd * (cr->dir.y * spr->sprx - cr->dir.x * spr->spry);
+	spr->ty = spr->invd * (-cr->plane.y * spr->sprx + cr->plane.x * spr->spry);
+	spr->sprscrx = (int)((WIN_WIDTH / 2) * (1 + spr->tx / spr->ty));
+	spr->u = 1;
+	spr->v = 1;
+	spr->sprh = abs((int)(WIN_HIGHT / spr->ty)) / spr->v;
+	spr->sprw = abs((int)(WIN_HIGHT / spr->ty)) / spr->u;
+	spr->bspr = -spr->sprw / 2 + spr->sprscrx;
+	spr->st = WIN_WIDTH - spr->bspr;
+	if (spr->bspr < 0)
+		spr->bspr = 0;
+	spr->espr = spr->sprw / 2 + spr->sprscrx;
+	spr->nd = WIN_WIDTH - spr->espr;
+	if (spr->espr >= WIN_WIDTH)
+		spr->espr = WIN_WIDTH - 1;
+	spr->strp = spr->bspr;
+}
+
 void	sprite(t_core *cr)
 {
-	int i;
-	//
-	int	st;
-	int	nd;
+	t_sprq	*spr;
+	int		i;
 
+	spr = malloc(sizeof(t_sprq));
 	i = cr->spritesnum - 1;
 	calc_dist(cr);
 	while (i >= 0)
 	{
-		double	sprX = cr->objarr[i].x - cr->player.x;
-		double	sprY = cr->objarr[i].y - cr->player.y;
-		double invDet = 1.0 / (cr->plane.x * cr->dir.y - cr->dir.x * cr->plane.y);
-
-		double	transX = invDet * (cr->dir.y * sprX - cr->dir.x * sprY);
-		double	transY = invDet * (-cr->plane.y * sprX + cr->plane.x * sprY);
-
-		int sprscrX = (int)((WIN_WIDTH / 2) * (1 + transX / transY));
-		int uDiv = 1;
-		int vDiv = 1;
-		double vMove = 0.0;
-		int vMovescr = (int)(vMove / transY);
-		int spriteH = abs((int)(WIN_HIGHT / transY)) / vDiv;
-		int spriteW = abs((int)(WIN_HIGHT / transY)) / uDiv;
-		int startspr = -spriteW /2 + sprscrX;
-		//
-		st = WIN_WIDTH - startspr;
-		if (startspr < 0)
-			startspr = 0;
-		int	endspr = spriteW / 2 + sprscrX;
-		//
-		nd = WIN_WIDTH - endspr;
-		if (endspr >= WIN_WIDTH)
-			endspr = WIN_WIDTH - 1;
-		int stripe = startspr;
-		while(stripe < endspr)
+		spritecalc(spr, cr, i);
+		while (spr->strp < spr->espr)
 		{
-			if(transY > 0 && stripe > 0 && stripe < WIN_WIDTH && transY < cr->mdist[stripe])
-				renderspr(cr, WIN_WIDTH - stripe, spriteH, st, nd, i);
-			stripe++;
+			if (spr->ty > 0 && spr->strp > 0 && spr->strp < WIN_WIDTH &&
+				spr->ty < cr->mdist[spr->strp])
+				renderspr(cr, WIN_WIDTH - spr->strp, spr, i);
+			spr->strp++;
 		}
 		i--;
 	}
+	free(spr);
 }
 
 void		sort_obj(t_core *cr)
 {
-	int		i, j;
-	for (i = 0 ; i < cr->spritesnum - 1; i++)
+	t_obj	tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < cr->spritesnum - 1)
 	{
-		for (j = 0 ; j < cr->spritesnum - i - 1 ; j++)
+		j = 0;
+		while (j < cr->spritesnum - i - 1)
 		{
-			if (cr->objarr[j].dist > cr->objarr[j+1].dist)
+			if (cr->objarr[j].dist > cr->objarr[j + 1].dist)
 			{
-				t_obj tmp = cr->objarr[j];
+				tmp = cr->objarr[j];
 				cr->objarr[j] = cr->objarr[j + 1];
 				cr->objarr[j + 1] = tmp;
 			}
+			j++;
 		}
+		i++;
 	}
 }
 
 static void	remove_obj(t_core *cr)
 {
-	int	i = 0;
+	int	i;
+
+	i = 0;
 	while (i < cr->spritesnum - 1)
 	{
 		cr->objarr[i] = cr->objarr[i + 1];
@@ -128,26 +151,3 @@ void		check_obj(t_core *cr)
 	if (cr->objarr[0].dist < 0.5)
 		pickup_obj(cr);
 }
-
-// void		obj_init(t_core *cr)
-// {
-// 	int		y;
-//
-// 	t_obj	sprarr[SPRITESNUM] =
-// 	{{6.5, 5.5, 3, 592, 0.0, 'c', 1},
-// 	{3.5, 7.5, 3, 592, 0.0, 'c', 1},
-// 	{8.5, 2.5, 11, 966, 0.0, 'c', 1}};
-// 	int	i = 0;
-// 	while (i < cr->spritesnum)
-// 	{
-// 		cr->objarr[i].x = sprarr[i].x;
-// 		cr->objarr[i].y = sprarr[i].y;
-// 		cr->objarr[i].tex = sprarr[i].tex;
-// 		cr->objarr[i].texsize = sprarr[i].texsize;
-// 		cr->objarr[i].type = sprarr[i].type;
-// 		cr->objarr[i].val = sprarr[i].val;
-// 		// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/coin.xpm", &(cr->objarr[i].texsize), &y);
-// 		// cr->objarr[i].tex = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
-// 		i++;
-// 	}
-// }

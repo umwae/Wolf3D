@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:12:24 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/06 18:55:19 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/06 21:21:30 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ int		seil(double y, double dist, t_core *cr)
 void	draw_gui(t_core *cr)
 {
 	char	*string;
+	char	*itoa;
 
-	string = ft_strjoin("COINS ", ft_itoa(cr->coins));
+	itoa = ft_itoa(cr->coins);
+	string = ft_strjoin("COINS ", itoa);
+	free(itoa);
 	mlx_string_put(cr->mlx, cr->win, 50, 950, 0xffffff, string);
 	free(string);
 }

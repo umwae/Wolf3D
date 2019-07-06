@@ -8,10 +8,10 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/fix/Desktop/wolf/wolf3d",
-            "args": ["test"],
+            "program": "/Users/jsteuber/Desktop/wolf2/wolf3d",
+            "args": ["large"],
             "stopAtEntry": false,
-            "cwd": "/Users/fix/Desktop/wolf",
+            "cwd": "/Users/jsteuber/Desktop/wolf2",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb"
