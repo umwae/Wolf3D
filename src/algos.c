@@ -74,7 +74,7 @@ void	dda2(t_core *cr)
         stepY = 1;
         sideDistY = (mapY + 1.0 - cr->player.y) * deltaDistY;
     }
-    while (hit == 0 && (mapX < cr->map_w && mapY <= cr->map_h))
+    while (hit == 0 && (mapX < 40 && mapY <= 40))
     {
     	if (sideDistX < sideDistY)
         {
@@ -88,7 +88,7 @@ void	dda2(t_core *cr)
           mapY += stepY;
           side = 1;
         }
-        if (((cr->wtexnum = cr->tiles[mapY][mapX]) > 0) || (mapX > cr->map_w || mapY > cr->map_h))
+        if (((cr->tiles[mapY][mapX]) > 0) || (mapX > 40 || mapY > 40))
 					hit = 1;
     }
 	if (side == 0)
@@ -108,24 +108,28 @@ void	dda2(t_core *cr)
         cr->hitx = mapX;
         cr->hity = wallX;
 		cr->wall = 'w';
+		cr->wtexnum = 1;
       }
       else if(side == 0 && cr->castx < 0)
       {
         cr->hitx = mapX + 1.0;
         cr->hity = wallX;
 		cr->wall = 'e';
+		cr->wtexnum = 6;
       }
       else if(side == 1 && cr->casty > 0)
       {
         cr->hitx = wallX;
         cr->hity = mapY;
 		cr->wall = 'n';
+		cr->wtexnum = 4;
       }
       else
       {
         cr->hitx = wallX;
         cr->hity = mapY + 1.0;
 		cr->wall = 's';
+		cr->wtexnum = 7;
       }
 	if (cr->hitx > cr->map_w)
 		cr->hitx = cr->map_w - 1;
