@@ -54,6 +54,7 @@ void	dda2(t_core *cr)
 
     int hit = 0;
     int side;
+		int	i = 0;
 	if (cr->castx < 0)
 	{
 		stepX= -1;
@@ -74,8 +75,15 @@ void	dda2(t_core *cr)
         stepY = 1;
         sideDistY = (mapY + 1.0 - cr->player.y) * deltaDistY;
     }
-    while (hit == 0 && (mapX < 40 && mapY <= 40))
+    while (hit == 0)
     {
+			if (i > MAXDIST)
+			{
+				hit = 1;
+				cr->dodraw = 0;
+			}
+			else
+				cr->dodraw = 1;
     	if (sideDistX < sideDistY)
         {
           sideDistX += deltaDistX;
@@ -88,8 +96,9 @@ void	dda2(t_core *cr)
           mapY += stepY;
           side = 1;
         }
-        if (((cr->tiles[mapY][mapX]) > 0) || (mapX > 40 || mapY > 40))
+        if ((cr->tiles[mapY][mapX]) > 0)
 					hit = 1;
+				i++;
     }
 	if (side == 0)
 		cr->dist = (mapX - cr->player.x + (1 - stepX) / 2) / cr->castx;

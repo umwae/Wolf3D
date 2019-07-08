@@ -125,11 +125,12 @@ typedef struct		s_core
 	int				wtexnum;//Номер текстуры стены, в которую попал луч
 	void			*img_switcher;//Указатель в какой имейдж печатать пиксель
 	void			(*print_func)(void *cr, int x, int y, int color);//Указатель на то какой функцией печатать
+	int				dodraw;//1 если рисовать куб, 0 если не рисовать
 }									t_core;
 
 # define ROTATION -0.1
 # define SPEED 0.3
-# define MAX_DIST 35//!!!!!!!!!!!!!!!!!!!!
+# define MAXDIST 30//Дальность прорисовки
 # define TEXSIZE 700
 # define TEXOBJSIZE 592
 # define TEXNUM 11//Число текстур
@@ -137,6 +138,7 @@ typedef struct		s_core
 # define FLOORTEX 2//Номер текстуры пола
 # define CEILTEX 8 //Текстура потолка
 # define MM_COLOR 0x34495E //Цвет карты
+# define VIEWDIST 2//Расстояние, с которого начинается затемнение
 int					init(char *argv, t_core *cr);
 int					hooks(t_core *cr);
 void				get_map(int fd0, int fd, t_core *cr);
@@ -173,5 +175,6 @@ int				getgrad(int color1, int color2, double passed);
 void			get_obj(t_core *cr, char *argv);
 void			img_minimap_new(t_core *cr);
 void			pxl_put_wrap(void *td, int x, int y, int color);
+int				red_button(t_core *pr);
 
 #endif

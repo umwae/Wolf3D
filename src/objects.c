@@ -33,7 +33,8 @@ void	renderspr(t_core *cr, int ray, t_sprq *spr, int objnum)
 		c = getgrad(cr->textures[cr->objarr[objnum].tex]
 			[tx + ((int)(i * ty) * 592)],
 			0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
-		if (((c >> 16) & 0xff) != 0)
+		//1 - 1 / log(cr->objarr[objnum].dist) Проблема с отрицательным passed
+		if (c != 0)
 			cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
 		i++;
 	}

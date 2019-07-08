@@ -29,8 +29,11 @@ int		colors(t_core *cr, int i, double column)
 	tx = (x - (int)x) * TEXSIZE;
 	ty = (double)TEXSIZE / column;
 	t = i * ty;
-	c = getgrad(cr->textures[cr->wtexnum][tx + (t * TEXSIZE)],
-		0, 1 - 1 / (cr->dist + 1));
+	if (cr->dist > VIEWDIST)
+		c = getgrad(cr->textures[cr->wtexnum][tx + (t * TEXSIZE)],
+		0, 1 - 1 / (cr->dist + 1 - VIEWDIST));
+	else
+		c = cr->textures[cr->wtexnum][tx + (t * TEXSIZE)];
 	return (c);
 }
 
@@ -44,9 +47,12 @@ int		floormap(double y, double dist, t_core *cr)
 	ceil.c_flry = ceil.wght * cr->hity + (1.0 - ceil.wght) * cr->player.y;
 	ceil.flrtx = (int)(ceil.c_flrx * TEXSIZE) % TEXSIZE;
 	ceil.flrty = (int)(ceil.c_flry * TEXSIZE) % TEXSIZE;
-	ceil.c = getgrad(getgrad(cr->textures[FLOORTEX][TEXSIZE *
-		ceil.flrtx + ceil.flrty],
-		0xffffff, 1 / (ceil.c_dist + 1)), 0x000000, 1 - 1 / (ceil.c_dist + 1));
+	if (ceil.c_dist > VIEWDIST)
+		ceil.c = getgrad(cr->textures[FLOORTEX][TEXSIZE *
+		ceil.flrtx + ceil.flrty], 0, 1 - 1 / (ceil.c_dist + 1 - VIEWDIST));
+	else
+		ceil.c = cr->textures[FLOORTEX][TEXSIZE *
+		ceil.flrtx + ceil.flrty];
 	return (ceil.c);
 }
 
@@ -60,9 +66,12 @@ int		seil(double y, double dist, t_core *cr)
 	ceil.c_flry = ceil.wght * cr->hity + (1.0 - ceil.wght) * cr->player.y;
 	ceil.flrtx = (int)(ceil.c_flrx * TEXSIZE) % TEXSIZE;
 	ceil.flrty = (int)(ceil.c_flry * TEXSIZE) % TEXSIZE;
-	ceil.c = getgrad(getgrad(cr->textures[CEILTEX][TEXSIZE *
-		ceil.flrtx + ceil.flrty],
-		0xffffff, 1 / (ceil.c_dist + 1)), 0x000000, 1 - 1 / (ceil.c_dist + 1));
+	if (ceil.c_dist > VIEWDIST)
+		ceil.c = getgrad(cr->textures[CEILTEX][TEXSIZE *
+		ceil.flrtx + ceil.flrty], 0, 1 - 1 / (ceil.c_dist + 1 - VIEWDIST));
+	else
+		ceil.c = cr->textures[CEILTEX][TEXSIZE *
+		ceil.flrtx + ceil.flrty];
 	return (ceil.c);
 }
 
@@ -89,20 +98,11 @@ void	draw(t_core *cr, int ray)
 	beg = (WIN_HIGHT - column) / 2;
 	while (++i < WIN_HIGHT)
 	{
-		if ((i > beg) && (i < WIN_HIGHT - beg) && i > 0)
-		{
-			if (cr->wall == 'e')
-				cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
-			if (cr->wall == 'n')
-				cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
-			if (cr->wall == 's')
-				cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
-			if (cr->wall == 'w')
-				cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
-		}
+		if ((i > beg) && (i < WIN_HIGHT - beg) && i > 0 && cr-> dodraw == 1)
+			cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
 		else if (i > beg + column)
 			cr->addr[ray + (i * WIN_WIDTH)] = floormap(i, cr->dist, cr);
-		else
+		else if (i < beg)
 			cr->addr[ray + (i * WIN_WIDTH)] = seil(WIN_HIGHT - i, cr->dist, cr);
 	}
 }
