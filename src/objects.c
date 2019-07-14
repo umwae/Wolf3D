@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 19:07:09 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/06 21:19:28 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/14 19:46:02 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include "wolf.h"
 
-void	renderspr(t_core *cr, int ray, t_sprq *spr, int objnum)
+void		renderspr(t_core *cr, int ray, t_sprq *spr, int objnum)
 {
 	int		i;
 	int		beg;
@@ -33,14 +33,13 @@ void	renderspr(t_core *cr, int ray, t_sprq *spr, int objnum)
 		c = getgrad(cr->textures[cr->objarr[objnum].tex]
 			[tx + ((int)(i * ty) * 592)],
 			0, 1 - 1 / (cr->objarr[objnum].dist / 2 + 1));
-		//1 - 1 / log(cr->objarr[objnum].dist) Проблема с отрицательным passed
 		if (c != 0)
 			cr->addr[ray + ((i + beg) * WIN_WIDTH)] = c;
 		i++;
 	}
 }
 
-static void	calc_dist(t_core *cr)
+void		calc_dist(t_core *cr)
 {
 	int i;
 
@@ -54,7 +53,7 @@ static void	calc_dist(t_core *cr)
 	}
 }
 
-void	spritecalc(t_sprq *spr, t_core *cr, int i)
+void		spritecalc(t_sprq *spr, t_core *cr, int i)
 {
 	spr->sprx = cr->objarr[i].x - cr->player.x;
 	spr->spry = cr->objarr[i].y - cr->player.y;
@@ -77,7 +76,7 @@ void	spritecalc(t_sprq *spr, t_core *cr, int i)
 	spr->strp = spr->bspr;
 }
 
-void	sprite(t_core *cr)
+void		sprite(t_core *cr)
 {
 	t_sprq	*spr;
 	int		i;
@@ -98,57 +97,4 @@ void	sprite(t_core *cr)
 		i--;
 	}
 	free(spr);
-}
-
-void		sort_obj(t_core *cr)
-{
-	t_obj	tmp;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < cr->spritesnum - 1)
-	{
-		j = 0;
-		while (j < cr->spritesnum - i - 1)
-		{
-			if (cr->objarr[j].dist > cr->objarr[j + 1].dist)
-			{
-				tmp = cr->objarr[j];
-				cr->objarr[j] = cr->objarr[j + 1];
-				cr->objarr[j + 1] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-static void	remove_obj(t_core *cr)
-{
-	int	i;
-
-	i = 0;
-	while (i < cr->spritesnum - 1)
-	{
-		cr->objarr[i] = cr->objarr[i + 1];
-		i++;
-	}
-	cr->spritesnum--;
-}
-
-void		pickup_obj(t_core *cr)
-{
-	cr->coins += 1;
-	remove_obj(cr);
-}
-
-void		check_obj(t_core *cr)
-{
-	calc_dist(cr);
-	sort_obj(cr);
-	if (cr->spritesnum == 0)
-		return ;
-	if (cr->objarr[0].dist < 0.5)
-		pickup_obj(cr);
 }

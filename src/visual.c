@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 22:29:09 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/14 19:32:31 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void			visual(t_core *cr)
 	cr->img_switcher = cr->image;
 	make_cast(cr);
 	sprite(cr);
-	// minimap_init(cr);
 	mlx_put_image_to_window(cr->mlx, cr->win, cr->img_ptr, 0, 0);
 	minimap(cr);
 	draw_gui(cr);

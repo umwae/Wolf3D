@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:58:47 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/14 14:02:18 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/14 19:34:22 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ void	write_obj(t_core *cr, int fd, int count)
 			i = 1;
 		free(line);
 	}
-	// cr->cspr = count;
-	// cr->sprite = spr;
 }
 
 void	get_obj(t_core *cr, char *argv)

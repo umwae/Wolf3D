@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 14:12:33 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/14 17:05:09 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/14 20:19:41 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,34 @@
 
 void		bresenham(t_core *cr)
 {
-	int		x0;
-	int		y0;
-	int		x1;
-	int		y1;
-	int dx;
-	int sx;
+	int	sx;
+	int	err;
+	int	sy;
+	int	e2;
 
-	x0 = cr->vs->x_i;
-	y0 = cr->vs->y_i;
-	x1 = cr->vs->x2_i;
-	y1 = cr->vs->y2_i;
-	dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-	int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-	int err = (dx > dy ? dx : -dy) / 2, e2;
- 	while (x0 != x1 || y0 != y1)
+	cr->vs->dx = abs(cr->vs->x2_i - cr->vs->x_i);
+	cr->vs->dy = abs(cr->vs->y2_i - cr->vs->y_i);
+	sx = cr->vs->x_i < cr->vs->x2_i ? 1 : -1;
+	sy = cr->vs->y_i < cr->vs->y2_i ? 1 : -1;
+	err = (cr->vs->dx > cr->vs->dy ? cr->vs->dx : -cr->vs->dy) / 2;
+	while (cr->vs->x_i != cr->vs->x2_i || cr->vs->y_i != cr->vs->y2_i)
 	{
-    	(*(cr->print_func))((void *)cr, x0, y0, cr->vs->vcolor);
-    	// if (x0 == x1 && y0 == y1)
-		// 	break;
-    	e2 = err;
-    	if (e2 >- dx)
+		(*cr->print_func)((void *)cr, cr->vs->x_i, cr->vs->y_i, cr->vs->vcolor);
+		e2 = err;
+		if (e2 > -cr->vs->dx)
 		{
-			err -= dy;
-			x0 += sx;
+			err -= cr->vs->dy;
+			cr->vs->x_i += sx;
 		}
-    	if (e2 < dy)
+		if (e2 < cr->vs->dy)
 		{
-			err += dx;
-			y0 += sy;
+			err += cr->vs->dx;
+			cr->vs->y_i += sy;
 		}
-  	}
+	}
 }
 
-void	ddaonepart(t_core *cr, t_dda *dda)
+void		ddaonepart(t_core *cr, t_dda *dda)
 {
 	cr->hitx = dda->mapx;
 	cr->hity = dda->wx;
@@ -59,7 +53,7 @@ void	ddaonepart(t_core *cr, t_dda *dda)
 	cr->wtexnum = 1;
 }
 
-void	ddaone(t_core *cr, t_dda *dda)
+void		ddaone(t_core *cr, t_dda *dda)
 {
 	if (dda->side == 0 && cr->castx > 0)
 	{
@@ -88,7 +82,7 @@ void	ddaone(t_core *cr, t_dda *dda)
 	}
 }
 
-void	ddatwo(t_core *cr, t_dda *dda)
+void		ddatwo(t_core *cr, t_dda *dda)
 {
 	if (cr->castx < 0)
 	{
@@ -112,7 +106,7 @@ void	ddatwo(t_core *cr, t_dda *dda)
 	}
 }
 
-void	dda2(t_core *cr)
+void		dda2(t_core *cr)
 {
 	t_dda	*dda;
 	int		i;

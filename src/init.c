@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 16:32:41 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/14 18:41:43 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void		vector_init(t_core *cr)
 {
-	cr->player.x = 1.5; //Добавить функцию поиска свободной клетки
-	cr->player.y = 1.5; //для помещения туда игрока
+	cr->player.x = PLAYER_START_X;
+	cr->player.y = PLAYER_START_Y;
 	cr->dir.x = 0.0;
 	cr->dir.y = 1.0;
 	cr->plane.x = 0.5;
@@ -32,18 +32,25 @@ static void	tex_init(t_core *cr)
 {
 	int	x;
 	int	y;
-	int	i = 1;
+	int	i;
 
-	// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/wall1.xpm", &x, &y);
+	i = 1;
+	if (!(cr->textures = (int **)malloc(sizeof(int *) * TEXNUM)))
+		err_ex(0);
+	if (!(cr->textrash = (int **)malloc(sizeof(int *) * TEXNUM)))
+		err_ex(0);
 	while (i <= TEXNUM)
 	{
-		cr->text = mlx_xpm_file_to_image(cr->mlx, ft_strjoin(ft_strjoin("./textures/texture", ft_itoa(i)), ".xpm"), &x, &y);
-		//Это тоже надо бы сохранять в массив чтобы не выглядело как утечка
-		cr->textures[i++] = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
+		cr->textrash[i] = mlx_xpm_file_to_image(cr->mlx, \
+			ft_strjoin(ft_strjoin("./textures/texture", \
+			ft_itoa(i)), ".xpm"), &x, &y);
+		cr->textures[i] = (int *)mlx_get_data_addr(cr->textrash[i], \
+			&cr->bpp, &(cr->linesize), &(cr->endian));
+		i++;
 	}
 }
 
-int		init(char *argv, t_core *cr)
+void		init(char *argv, t_core *cr)
 {
 	int		fd0;
 	int		fd;
@@ -62,21 +69,12 @@ int		init(char *argv, t_core *cr)
 	if (!(cr->objarr = (t_obj *)malloc(sizeof(t_obj) * SPRITESNUM)))
 		err_ex(0);
 	cr->spritesnum = SPRITESNUM;
-	// obj_init(cr);
 	x = TEXSIZE;
 	y = TEXSIZE;
-	if (!(cr->textures = (int **)malloc(sizeof(int *) * TEXNUM)))
-		err_ex(0);
-	// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/texture1.xpm", &x, &y);
-	// cr->addrtext = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
-	// cr->text = mlx_xpm_file_to_image(cr->mlx, "src/texture2.xpm", &x, &y);
-	// cr->floortext = (int *)mlx_get_data_addr(cr->text, &cr->bpp, &(cr->linesize), &(cr->endian));
-	//
 	tex_init(cr);
 	get_map(fd0, fd, cr);
 	vector_init(cr);
 	minimap_init(cr);
 	img_new(cr);
 	visual(cr);
-	return (0);
 }

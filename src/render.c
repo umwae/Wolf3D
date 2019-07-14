@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:12:24 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/06 21:21:30 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/14 19:33:26 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		floormap(double y, double dist, t_core *cr)
 {
 	t_flc ceil;
 
-	ceil.c_dist = (double)WIN_HIGHT / (2.0 * (double)y - (double)WIN_HIGHT);
+	ceil.c_dist = (double)WIN_WIDTH / (2.0 * (double)y - (double)WIN_HIGHT);
 	ceil.wght = ceil.c_dist / dist;
 	ceil.c_flrx = ceil.wght * cr->hitx + (1.0 - ceil.wght) * cr->player.x;
 	ceil.c_flry = ceil.wght * cr->hity + (1.0 - ceil.wght) * cr->player.y;
@@ -60,7 +60,7 @@ int		seil(double y, double dist, t_core *cr)
 {
 	t_flc ceil;
 
-	ceil.c_dist = (double)WIN_HIGHT / (2.0 * (double)y - (double)WIN_HIGHT);
+	ceil.c_dist = (double)WIN_WIDTH / (2.0 * (double)y - (double)WIN_HIGHT);
 	ceil.wght = ceil.c_dist / dist;
 	ceil.c_flrx = ceil.wght * cr->hitx + (1.0 - ceil.wght) * cr->player.x;
 	ceil.c_flry = ceil.wght * cr->hity + (1.0 - ceil.wght) * cr->player.y;
@@ -83,7 +83,8 @@ void	draw_gui(t_core *cr)
 	itoa = ft_itoa(cr->coins);
 	string = ft_strjoin("COINS ", itoa);
 	free(itoa);
-	mlx_string_put(cr->mlx, cr->win, 50, 950, 0xffffff, string);
+	mlx_string_put(cr->mlx, cr->win, WIN_WIDTH * 0.08, \
+		WIN_HIGHT * 0.91, 0xffffff, string);
 	free(string);
 }
 
@@ -94,11 +95,11 @@ void	draw(t_core *cr, int ray)
 	double	beg;
 
 	i = -1;
-	column = WIN_HIGHT / cr->dist;
+	column = WIN_WIDTH / cr->dist;
 	beg = (WIN_HIGHT - column) / 2;
 	while (++i < WIN_HIGHT)
 	{
-		if ((i > beg) && (i < WIN_HIGHT - beg) && i > 0 && cr-> dodraw == 1)
+		if ((i > beg) && (i < WIN_HIGHT - beg) && i >= 0 && cr->dodraw == 1)
 			cr->addr[ray + (i * WIN_WIDTH)] = colors(cr, i - beg, column);
 		else if (i > beg + column)
 			cr->addr[ray + (i * WIN_WIDTH)] = floormap(i, cr->dist, cr);

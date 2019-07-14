@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 18:15:45 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/14 17:52:20 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,7 @@ void	err_ex(int pr)
 
 int		hooks(t_core *cr)
 {
-// 	int ms = 0;
-// 	int msp = 0;
-// 	int i = 0;
-//
-// visual(cr);
-// 	while(i < 999999)
-// 	{
-// 		msp = ms;
-// 		while (ms - msp < 3000)
-// 		{
-// 			ms = clock() * 1000 / CLOCKS_PER_SEC;
-// 		}
-// 		key_action(13, cr);
-// 		i++;
-// 	}
-	// printf("%d\n", milliseconds_since);
 	visual(cr);
-	//
-	// mlx_hook(cr->win, 4, 1, mouse_press, cr);
-	// mlx_hook(cr->win, 5, 1, mouse_release, cr);
-	// mlx_hook(cr->win, 6, 1, mouse_move, cr);
 	mlx_hook(cr->win, 2, 1, key_action, cr);
 	mlx_hook(cr->win, 17, 1, red_button, cr);
 	mlx_loop(cr->mlx);
