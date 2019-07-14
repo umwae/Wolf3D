@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 14:09:49 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/14 17:03:06 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ static void	draw_grid(t_core *cr)
 	while (map_h--)
 	{
 		cr->vs->x_i = 0;
-		cr->vs->y_i = yp;
-		cr->vs->x2_i = cr->vs->gridsize * (cr->map_w - 1);
-		cr->vs->y2_i = yp;
+		cr->vs->y_i = yp - 1;
+		cr->vs->x2_i = cr->vs->gridsize * (cr->map_w - 1) - 1;
+		cr->vs->y2_i = yp - 1;
 		bresenham(cr);
 		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->map_w, cr->map_h, cr->vs->gridsize);
 		yp += cr->vs->gridsize;
@@ -91,10 +91,10 @@ static void	draw_grid(t_core *cr)
 	yp = cr->vs->gridsize;
 	while (map_w--)
 	{
-		cr->vs->x_i = yp;
+		cr->vs->x_i = yp - 1;
 		cr->vs->y_i = 0;
-		cr->vs->x2_i = yp;
-		cr->vs->y2_i = cr->vs->gridsize * (cr->map_h - 1);
+		cr->vs->x2_i = yp - 1;
+		cr->vs->y2_i = cr->vs->gridsize * (cr->map_h - 1) - 1;
 		bresenham(cr);
 		// printf("%d %d %d %d %d\n", yp, cr->vs->mmsize, cr->map_w, cr->map_h, cr->vs->gridsize);
 		yp += cr->vs->gridsize;
@@ -139,7 +139,7 @@ void		minimap_init(t_core *cr)
 	img_minimap_new(cr);
 	cr->print_func = &img_pxl;
 	cr->img_switcher = cr->mm_image;
-	draw_rectangle(cr, 0, 0, cr->vs->gridsize * (cr->map_w - 1), cr->vs->gridsize * (cr->map_h - 1));
+	draw_rectangle(cr, 0, 0, cr->vs->gridsize * (cr->map_w) - 1, cr->vs->gridsize * (cr->map_h) - 1);
 	draw_grid(cr);
 	draw_walls(cr);
 }
