@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 22:31:08 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/14 14:09:49 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,44 +16,53 @@
 
 static void	draw_objects(t_core *cr)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	cr->vs->vcolor = 0xffffff;
 	while (i < cr->spritesnum)
 	{
-		draw_rectangle(cr, cr->objarr[i].x * cr->vs->gridsize + cr->vs->x_offset - 3, \
-			cr->objarr[i].y * cr->vs->gridsize + cr->vs->y_offset - 3, cr->vs->gridsize / 3, cr->vs->gridsize / 3);
+		draw_rectangle(cr, cr->objarr[i].x *
+			cr->vs->gridsize + cr->vs->x_offset - 3,
+				cr->objarr[i].y * cr->vs->gridsize + cr->vs->y_offset - 3,
+					cr->vs->gridsize / 3, cr->vs->gridsize / 3);
 		i++;
 	}
 }
 
 static void	draw_player(t_core *cr)
 {
-	int		pp = cr->vs->gridsize / 3;
+	int pp;
 
+	pp = cr->vs->gridsize / 3;
 	cr->vs->vcolor = 0xffffff;
 	cr->vs->x_i = cr->player.x * cr->vs->gridsize + cr->vs->x_offset;
 	cr->vs->y_i = cr->player.y * cr->vs->gridsize + cr->vs->y_offset;
-	cr->vs->x2_i = cr->player.x * cr->vs->gridsize + cr->dir.x / cr->dir.len * 2 * cr->vs->gridsize + cr->vs->x_offset;
-	cr->vs->y2_i = cr->player.y * cr->vs->gridsize + cr->dir.y / cr->dir.len * 2 * cr->vs->gridsize + cr->vs->y_offset;
+	cr->vs->x2_i = cr->player.x * cr->vs->gridsize + cr->dir.x /
+		cr->dir.len * 2 * cr->vs->gridsize + cr->vs->x_offset;
+	cr->vs->y2_i = cr->player.y * cr->vs->gridsize + cr->dir.y /
+		cr->dir.len * 2 * cr->vs->gridsize + cr->vs->y_offset;
 	bresenham(cr);
 	cr->vs->vcolor = 0x00ff00;
-	draw_rectangle(cr, cr->player.x * cr->vs->gridsize + cr->vs->x_offset - pp / 2, \
+	draw_rectangle(cr, cr->player.x * cr->vs->gridsize +
+		cr->vs->x_offset - pp / 2,
 		cr->player.y * cr->vs->gridsize + cr->vs->y_offset - pp / 2, pp, pp);
 }
 
 static void	draw_walls(t_core *cr)
 {
 	int		xlen;
-	int		ylen = cr->map_h;
+	int		ylen;
+
+	ylen = cr->map_h;
 	cr->vs->vcolor = 0x909497;
-	while(ylen--)
+	while (ylen--)
 	{
 		xlen = cr->map_w;
-		while(xlen--)
+		while (xlen--)
 		{
 			if (cr->tiles[ylen][xlen] != 0)
-			draw_rectangle(cr, xlen * cr->vs->gridsize, \
+				draw_rectangle(cr, xlen * cr->vs->gridsize, \
 				ylen * cr->vs->gridsize, cr->vs->gridsize, cr->vs->gridsize);
 		}
 	}
@@ -63,8 +72,9 @@ static void	draw_grid(t_core *cr)
 {
 	int		map_h;
 	int		map_w;
-	int		yp = cr->vs->gridsize;
+	int		yp;
 
+	yp = cr->vs->gridsize;
 	cr->vs->vcolor = 0x909497;
 	map_h = cr->map_h;
 	map_w = cr->map_w - 1;

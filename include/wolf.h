@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wolf.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 22:34:31 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/14 16:14:56 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ typedef struct		s_minimap//Для миникарты1
 	int				mmsize_y;
 	int				gridsize;
 }									t_minimap;
+
+typedef struct		s_dda
+{
+	int				mapx;
+	int				mapy;
+	double			sidedx;
+	double			sidedy;
+	double			deltadx;
+	double			deltady;
+	int				stepx;
+	int				stepy;
+	int				hit;
+	int				side;
+	double			wx;
+	double			flxwll;
+	double			flywll;
+}									t_dda;
 
 typedef struct		s_vec
 {
@@ -153,6 +170,9 @@ int					mouse_release(int button, int x, int y, t_core *cr);
 int					mouse_move(int x, int y, t_core *cr);
 void				make_cast(t_core *cr);
 void				bresenham(t_core *cr);
+void				ddainit(t_core *cr, t_dda *dda);
+void				ddafour(t_core *cr, t_dda *dda);
+void				ddathree(t_core *cr, t_dda *dda, int i);
 void				dda2(t_core *cr);
 void				sprite(t_core *cr);
 void				bresenham(t_core *cr);

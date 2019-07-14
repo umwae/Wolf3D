@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   obj_parser.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/14 13:58:47 by adoyle            #+#    #+#             */
+/*   Updated: 2019/07/14 14:02:18 by adoyle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <fcntl.h>
 #include <math.h>
@@ -6,10 +18,10 @@
 
 double	ft_atod(char *l)
 {
-	int i;
-	int k;
-	int j;
-	int c;
+	int		i;
+	int		k;
+	int		j;
+	int		c;
 	double	r;
 
 	i = 0;
@@ -28,7 +40,7 @@ double	ft_atod(char *l)
 	while (c--)
 		i = i * 10;
 	r = k + ((double)j / (double)i);
-	return(r);
+	return (r);
 }
 
 int		checkd(char *l, int i)
@@ -47,9 +59,9 @@ int		checkd(char *l, int i)
 
 void	writemass(t_obj *spr, char *l)
 {
-	int i;
-	int j;
-	double tx;
+	int		i;
+	int		j;
+	double	tx;
 
 	i = 0;
 	j = 0;
@@ -76,10 +88,10 @@ void	writemass(t_obj *spr, char *l)
 
 void	write_obj(t_core *cr, int fd, int count)
 {
-	t_obj spr[count];
-	int i;
-	int j;
-	char *line;
+	t_obj	spr[count];
+	int		i;
+	int		j;
+	char	*line;
 
 	cr->objarr = malloc(sizeof(t_obj) * count);
 	i = 0;
@@ -87,11 +99,11 @@ void	write_obj(t_core *cr, int fd, int count)
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (line[0] > 47 && line[0] < 58)
-			break;
+			break ;
 		if (i == 1)
 		{
 			writemass(&cr->objarr[j], line);
- 			j++;
+			j++;
 		}
 		if (ft_strcmp("obj:", line) == 0)
 			i = 1;
@@ -103,11 +115,11 @@ void	write_obj(t_core *cr, int fd, int count)
 
 void	get_obj(t_core *cr, char *argv)
 {
-	int fd3;
-	int fd4;
-	int i;
-	int count;
-	char *line;
+	int		fd3;
+	int		fd4;
+	int		i;
+	int		count;
+	char	*line;
 
 	fd3 = open(argv, O_RDONLY);
 	fd4 = open(argv, O_RDONLY);
@@ -116,7 +128,7 @@ void	get_obj(t_core *cr, char *argv)
 	while (get_next_line(fd3, &line) == 1)
 	{
 		if (line[0] > 47 && line[0] < 58)
-			break;
+			break ;
 		if (i == 1)
 			count++;
 		if (ft_strcmp("obj:", line) == 0)

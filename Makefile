@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+         #
+#    By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/04/06 15:55:47 by jsteuber          #+#    #+#              #
-#    Updated: 2019/07/06 18:54:18 by jsteuber         ###   ########.fr        #
+#    Updated: 2019/07/14 16:15:35 by adoyle           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ BIN_PATH=./bin
 SRC= main.c parser.c actions.c visual.c \
 image.c render.c raycast.c algos.c \
 matrix.c init.c minimap.c objects.c \
-obj_parser.c rendertwo.c
+obj_parser.c rendertwo.c algostwo.c
 OBJ:= $(addprefix $(BIN_PATH)/,$(SRC:.c=.o))
 
 .PHONY: all clean fclean re

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   algos.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/07/14 14:12:33 by adoyle            #+#    #+#             */
+/*   Updated: 2019/07/14 16:15:12 by adoyle           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <stdio.h>
 #include <fcntl.h>
@@ -11,12 +22,14 @@ void		bresenham(t_core *cr)
 	int		y0;
 	int		x1;
 	int		y1;
+	int dx;
+	int sx;
 
 	x0 = cr->vs->x_i;
 	y0 = cr->vs->y_i;
 	x1 = cr->vs->x2_i;
 	y1 = cr->vs->y2_i;
-	int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+	dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 	int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
 	int err = (dx > dy ? dx : -dy) / 2, e2;
  	while (x0 != x1 || y0 != y1)
@@ -38,108 +51,83 @@ void		bresenham(t_core *cr)
   	}
 }
 
-void	dda2(t_core *cr)
+void	ddaonepart(t_core *cr, t_dda *dda)
 {
-    int mapX = (int)cr->player.x;
-    int mapY = (int)cr->player.y;
+	cr->hitx = dda->mapx;
+	cr->hity = dda->wx;
+	cr->wall = 'w';
+	cr->wtexnum = 1;
+}
 
-    double sideDistX;
-    double sideDistY;
-
-    double deltaDistX = sqrt(1 + (cr->casty * cr->casty) / (cr->castx * cr->castx));
-    double deltaDistY = sqrt(1 + (cr->castx * cr->castx) / (cr->casty * cr->casty));
-
-    int stepX;
-    int stepY;
-
-    int hit = 0;
-    int side;
-		int	i = 0;
-	if (cr->castx < 0)
+void	ddaone(t_core *cr, t_dda *dda)
+{
+	if (dda->side == 0 && cr->castx > 0)
 	{
-		stepX= -1;
-		sideDistX = (cr->player.x - mapX) * deltaDistX;
+		ddaonepart(cr, dda);
 	}
-	else
+	else if (dda->side == 0 && cr->castx < 0)
 	{
-		stepX = 1;
-       	sideDistX = (mapX + 1.0 - cr->player.x) * deltaDistX;
-	}
-	if (cr->casty < 0)
-    {
-    	stepY = -1;
-		sideDistY = (cr->player.y - mapY) * deltaDistY;
-    }
-	else
-    {
-        stepY = 1;
-        sideDistY = (mapY + 1.0 - cr->player.y) * deltaDistY;
-    }
-    while (hit == 0)
-    {
-			if (i > MAXDIST)
-			{
-				hit = 1;
-				cr->dodraw = 0;
-			}
-			else
-				cr->dodraw = 1;
-    	if (sideDistX < sideDistY)
-        {
-          sideDistX += deltaDistX;
-          mapX += stepX;
-          side = 0;
-        }
-        else
-        {
-          sideDistY += deltaDistY;
-          mapY += stepY;
-          side = 1;
-        }
-        if ((cr->tiles[mapY][mapX]) > 0)
-					hit = 1;
-				i++;
-    }
-	if (side == 0)
-		cr->dist = (mapX - cr->player.x + (1 - stepX) / 2) / cr->castx;
-    else
-		cr->dist = (mapY - cr->player.y + (1 - stepY) / 2) / cr->casty;
-
-	cr->mdist[cr->rcurr] = cr->dist;
-	double wallX; //where exactly the wall was hit
-  if (side == 0)
-  	wallX = cr->player.y + cr->dist * cr->casty;
-  else
-  	wallX = cr->player.x + cr->dist * cr->castx;
-	double floorXWall, floorYWall; //x, y position of the floor texel at the bottom of the wall
-	if(side == 0 && cr->castx > 0)
-      {
-        cr->hitx = mapX;
-        cr->hity = wallX;
-		cr->wall = 'w';
-		cr->wtexnum = 1;
-      }
-      else if(side == 0 && cr->castx < 0)
-      {
-        cr->hitx = mapX + 1.0;
-        cr->hity = wallX;
+		cr->hitx = dda->mapx + 1.0;
+		cr->hity = dda->wx;
 		cr->wall = 'e';
 		cr->wtexnum = 6;
-      }
-      else if(side == 1 && cr->casty > 0)
-      {
-        cr->hitx = wallX;
-        cr->hity = mapY;
+	}
+	else if (dda->side == 1 && cr->casty > 0)
+	{
+		cr->hitx = dda->wx;
+		cr->hity = dda->mapy;
 		cr->wall = 'n';
 		cr->wtexnum = 4;
-      }
-      else
-      {
-        cr->hitx = wallX;
-        cr->hity = mapY + 1.0;
+	}
+	else
+	{
+		cr->hitx = dda->wx;
+		cr->hity = dda->mapy + 1.0;
 		cr->wall = 's';
 		cr->wtexnum = 7;
-      }
+	}
+}
+
+void	ddatwo(t_core *cr, t_dda *dda)
+{
+	if (cr->castx < 0)
+	{
+		dda->stepx = -1;
+		dda->sidedx = (cr->player.x - dda->mapx) * dda->deltadx;
+	}
+	else
+	{
+		dda->stepx = 1;
+		dda->sidedx = (dda->mapx + 1.0 - cr->player.x) * dda->deltadx;
+	}
+	if (cr->casty < 0)
+	{
+		dda->stepy = -1;
+		dda->sidedy = (cr->player.y - dda->mapy) * dda->deltady;
+	}
+	else
+	{
+		dda->stepy = 1;
+		dda->sidedy = (dda->mapy + 1.0 - cr->player.y) * dda->deltady;
+	}
+}
+
+void	dda2(t_core *cr)
+{
+	t_dda	*dda;
+	int		i;
+
+	dda = malloc(sizeof(t_dda));
+	ddainit(cr, dda);
+	i = 0;
+	ddatwo(cr, dda);
+	while (dda->hit == 0)
+	{
+		ddathree(cr, dda, i);
+		i++;
+	}
+	ddafour(cr, dda);
+	ddaone(cr, dda);
 	if (cr->hitx > cr->map_w)
 		cr->hitx = cr->map_w - 1;
 	if (cr->hity > cr->map_h)
@@ -148,5 +136,4 @@ void	dda2(t_core *cr)
 		cr->hitx = 1;
 	if (cr->hity < 1)
 		cr->hity = 1;
-	// printf("x - %f, y - %f\n", cr->hitx, cr->hity);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:10 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/06 22:04:27 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/14 13:55:00 by adoyle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,7 @@ void			get_map(int fd0, int fd, t_core *cr)
 
 	yc = 0;
 	if (get_next_line(fd0, &line) == 1)
-	{
 		yc++;
-	}
 	else
 		err_ex(2);
 	cr->map_w = ft_ctwords(line, ' ');
