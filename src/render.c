@@ -6,12 +6,11 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/08 19:12:24 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/14 19:33:26 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:52:07 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include <stdio.h>
 #include <stdlib.h>
 
 int		colors(t_core *cr, int i, double column)

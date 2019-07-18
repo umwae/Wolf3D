@@ -6,14 +6,11 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 16:13:31 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/14 16:14:00 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/18 18:45:28 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
 #include <math.h>
-#include <stdlib.h>
 #include "wolf.h"
 
 void	ddathree(t_core *cr, t_dda *dda, int i)

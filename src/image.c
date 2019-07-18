@@ -6,12 +6,11 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:47 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/18 16:21:15 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:42:49 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include "stdio.h"
 
 void		img_new(t_core *cr)
 {

@@ -6,13 +6,10 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 14:12:33 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/18 18:09:44 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:44:48 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <math.h>
 #include <stdlib.h>
 #include "wolf.h"
 

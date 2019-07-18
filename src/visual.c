@@ -6,13 +6,11 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 19:32:31 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:52:38 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 void			visual(t_core *cr)
 {

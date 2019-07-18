@@ -6,14 +6,10 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 19:07:09 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/14 19:43:47 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:51:16 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <fcntl.h>
-#include <math.h>
-#include <stdlib.h>
 #include "wolf.h"
 
 void		sort_obj(t_core *cr)

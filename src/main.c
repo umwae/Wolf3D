@@ -6,15 +6,12 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/18 16:16:00 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:49:03 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
 #include <stdlib.h>
 #include "wolf.h"
-#include <time.h>
-#include <stdio.h>
 
 void	err_ex(int pr)
 {

@@ -6,12 +6,11 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:43 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/18 16:52:33 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:52:28 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
-#include <stdlib.h>
 
 static void			iterate_y(t_core *cr, int y, int x)
 {

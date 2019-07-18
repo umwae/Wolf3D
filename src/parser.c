@@ -6,13 +6,12 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:10 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/18 16:56:50 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:51:29 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 static void		map_line(char *line, int j, t_core *cr)
 {
