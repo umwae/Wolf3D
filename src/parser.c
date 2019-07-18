@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:10 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 13:55:00 by adoyle           ###   ########.fr       */
+/*   Updated: 2019/07/18 16:56:50 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void		map_line(char *line, int j, t_core *cr)
 	line_len_ct = cr->map_w;
 	while (line_len_ct--)
 	{
+		if (!arr[i])
+			err_ex(1);
 		cr->tiles[j][cr->map_w - line_len_ct - 1] = ft_atoi(arr[i]);
 		i++;
 	}

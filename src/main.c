@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 17:52:20 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 16:16:00 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	err_ex(int pr)
 		ft_putstr("Error: can't read from file\n");
 	if (pr == 3)
 		ft_putstr("Usage: ./wolf3d map_name\n");
+	if (pr == 4)
+		ft_putstr("Error: change player's position!\n");
 	exit(1);
 }
 

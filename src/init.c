@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:20 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 18:41:43 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:03:07 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@ void		vector_init(t_core *cr)
 
 static void	tex_init(t_core *cr)
 {
-	int	x;
-	int	y;
-	int	i;
+	int		x;
+	int		y;
+	int		i;
+	char	*tmp;
+	char	*tmp2;
 
 	i = 1;
 	if (!(cr->textures = (int **)malloc(sizeof(int *) * TEXNUM)))
@@ -41,9 +43,13 @@ static void	tex_init(t_core *cr)
 		err_ex(0);
 	while (i <= TEXNUM)
 	{
-		cr->textrash[i] = mlx_xpm_file_to_image(cr->mlx, \
-			ft_strjoin(ft_strjoin("./textures/texture", \
-			ft_itoa(i)), ".xpm"), &x, &y);
+		tmp = ft_itoa(i);
+		tmp2 = ft_strjoin("./textures/texture", tmp);
+		free(tmp);
+		tmp = ft_strjoin((tmp2), ".xpm");
+		free(tmp2);
+		cr->textrash[i] = mlx_xpm_file_to_image(cr->mlx, tmp, &x, &y);
+		free(tmp);
 		cr->textures[i] = (int *)mlx_get_data_addr(cr->textrash[i], \
 			&cr->bpp, &(cr->linesize), &(cr->endian));
 		i++;
@@ -66,14 +72,13 @@ void		init(char *argv, t_core *cr)
 	if (!(cr->vs = (t_minimap *)malloc(sizeof(t_minimap))))
 		err_ex(0);
 	cr->rotation = ROTATION;
-	if (!(cr->objarr = (t_obj *)malloc(sizeof(t_obj) * SPRITESNUM)))
+	if (!(cr->objarr = malloc(sizeof(t_obj) * SPRITESNUM)))
 		err_ex(0);
 	cr->spritesnum = SPRITESNUM;
-	x = TEXSIZE;
-	y = TEXSIZE;
 	tex_init(cr);
 	get_map(fd0, fd, cr);
 	vector_init(cr);
+	check_borders(cr);
 	minimap_init(cr);
 	img_new(cr);
 	visual(cr);

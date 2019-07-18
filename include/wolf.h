@@ -6,7 +6,7 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:55:16 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 20:06:27 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:38:08 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,17 +153,20 @@ typedef struct		s_core
 	int				**textrash;//Сохраняем сюда указатели на имейджи чтобы не выглядело как утечка
 	double			tmp_p_x;
 	double			tmp_p_y;//Для actions
+	int				fd3;
+	int				fd4;
+	int				count;
 }									t_core;
 
 # define PLAYER_START_X 1.5//Положение игрока
 # define PLAYER_START_Y 1.5//Положение игрока
 # define ROTATION -0.1
-# define SPEED 0.3
+# define SPEED 0.1
 # define MAXDIST 30//Дальность прорисовки
 # define TEXSIZE 700
 # define TEXOBJSIZE 592
 # define TEXNUM 11//Число текстур
-# define SPRITESNUM 3//Число спрайтов
+# define SPRITESNUM 6//Число спрайтов
 # define FLOORTEX 2//Номер текстуры пола
 # define CEILTEX 8 //Текстура потолка
 # define MM_COLOR 0x34495E //Цвет карты
@@ -203,5 +206,6 @@ void				pxl_put_wrap(void *td, int x, int y, int color);
 int					red_button(t_core *pr);
 void				draw_objects(t_core *cr);
 void				draw_player(t_core *cr);
+void				check_borders(t_core *cr);
 
 #endif

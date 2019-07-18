@@ -6,12 +6,11 @@
 /*   By: jsteuber <jsteuber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 15:54:59 by jsteuber          #+#    #+#             */
-/*   Updated: 2019/07/14 20:08:58 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:08:17 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "stdlib.h"
 #include "wolf.h"
 
 int			red_button(t_core *pr)

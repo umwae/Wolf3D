@@ -6,7 +6,7 @@
 /*   By: adoyle <adoyle@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/14 13:58:47 by adoyle            #+#    #+#             */
-/*   Updated: 2019/07/14 19:34:22 by jsteuber         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:37:10 by jsteuber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,15 @@ void	write_obj(t_core *cr, int fd, int count)
 	int		j;
 	char	*line;
 
-	cr->objarr = malloc(sizeof(t_obj) * count);
 	i = 0;
 	j = 0;
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (line[0] > 47 && line[0] < 58)
+		{
+			free(line);
 			break ;
+		}
 		if (i == 1)
 		{
 			writemass(&cr->objarr[j], line);
@@ -113,29 +115,29 @@ void	write_obj(t_core *cr, int fd, int count)
 
 void	get_obj(t_core *cr, char *argv)
 {
-	int		fd3;
-	int		fd4;
 	int		i;
-	int		count;
 	char	*line;
 
-	fd3 = open(argv, O_RDONLY);
-	fd4 = open(argv, O_RDONLY);
+	cr->fd3 = open(argv, O_RDONLY);
+	cr->fd4 = open(argv, O_RDONLY);
 	i = 0;
-	count = 0;
-	while (get_next_line(fd3, &line) == 1)
+	cr->count = 0;
+	while (get_next_line(cr->fd3, &line) == 1)
 	{
 		if (line[0] > 47 && line[0] < 58)
+		{
+			free(line);
 			break ;
+		}
 		if (i == 1)
-			count++;
+			cr->count++;
 		if (ft_strcmp("obj:", line) == 0)
 			i = 1;
 		free(line);
 	}
-	while (get_next_line(fd3, &line) == 1)
-		i = 0;
-	close(fd3);
-	write_obj(cr, fd4, count);
-	close(fd4);
+	while (get_next_line(cr->fd3, &line) == 1)
+		free(line);
+	close(cr->fd3);
+	write_obj(cr, cr->fd4, cr->count);
+	close(cr->fd4);
 }
